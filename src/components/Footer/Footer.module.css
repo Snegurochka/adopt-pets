@@ -1,0 +1,26 @@
+.footer{
+	margin-top: 24px;
+	background: var(--primary);
+}
+
+.wrapp {
+	display: grid;
+	padding: 25px 0px;
+	color: var(--white);
+	max-width: var(--maxWidth);
+	margin: 0 auto;
+	font-size: 16px;
+	line-height: 20px;
+	grid-template-columns: 1fr auto;
+	gap: 10px 40px;
+}
+
+.wrapp a:hover {
+	color: var(--lightGrey);
+}
+
+@media (max-width: 765px) {
+	.wrapp {
+		grid-template-columns: 1fr;
+	}
+}

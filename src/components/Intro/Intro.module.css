@@ -1,0 +1,15 @@
+.wrapp {
+    max-width: 400px;
+    position: absolute;
+    top: 100px;
+    left: calc(50% - 550px);
+}
+.text {
+    font-size: 60px;
+}
+
+.wrapp .big{
+	font-size: 30px;
+    padding: 14px 48px;
+    width: 100%;
+}

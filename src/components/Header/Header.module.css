@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  width: var(--maxWidth);
+  margin: 0 auto;
+}
+
+header > a,
+#root > div > h1 {
+  display: inline-block;
+  margin: 20px 0;
+}
+
+header a {
+  color: var(--darkGrey);
+  font-size: 3px;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  padding-bottom: 10px;
+}

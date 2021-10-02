@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import ThemeContext from "./context/ThemeContext";
+// components
+import Header from './components/Header/Header';
+import Intro from './components/Intro/Intro';
+import Details from './components/Details/Details';
+import SearchParams from './components/SearchParams/SearchParams';
+import Footer from './components/Footer/Footer';
 
-function App() {
+const App: React.FC = () => {
+  const theme = useState("darkblue");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeContext.Provider value={theme}>
+      <BrowserRouter>
+        <Header />
+        <Intro />
+
+        <Switch>
+          <Route path="/details/:petId" component={Details} />
+          <Route path="/" component={SearchParams} />
+        </Switch>
+        <Footer />
+      </BrowserRouter>
+    </ThemeContext.Provider>
   );
 }
 
