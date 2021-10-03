@@ -1,0 +1,14 @@
+.wrapper {
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    background: url(../../img/intro2.jpg) top right no-repeat;
+    height: 630px;
+}
+
+@media only screen and (max-width: 1129px) {
+    .wrapper {
+        background: var(--lightGrey);
+        height: 0px;
+        display: none;
+    }
+}

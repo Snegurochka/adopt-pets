@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 //import { IPet } from "../../interfaces/interfaces";
+import styles from "./Pet.module.css";
 
 //type Props = IPet & {location: string}
 interface IProps {
@@ -12,19 +13,19 @@ interface IProps {
 }
 
 const Pet: React.FC<IProps> = ({ id, name, animal, breed, images, location }) => {
-  let hero = "http://pets-images.dev-apis.com/pets/none.jpg";
+  let hero = "https://pets-images.dev-apis.com/pets/none.jpg";
 
   if (images.length) {
     hero = images[0]
   }
   return (
-    <Link to={`/details/${id}`} className="pet">
-      <div className="image-container">
+    <Link to={`/details/${id}`} className={styles.pet}>
+      <div className={styles.image}>
         <img data-testid="thumbnail" src={hero} alt={name} />
       </div>
-      <div className="info">
-        <h1>{name}</h1>
-        <h2>{`${animal} — ${breed} — ${location}`}</h2>
+      <div className={styles.info}>
+        <h3>{name}</h3>
+        <p>{`${animal} — ${breed} — ${location}`}</p>
       </div>
     </Link>
   );

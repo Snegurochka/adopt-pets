@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./Carousel.module.css";
 
 interface IProps {
     images: string[]
@@ -7,11 +8,11 @@ interface IProps {
 const Carousel: React.FC<IProps> = ({ images }) => {
     const [active, setActive] = useState(0);
     return (
-        <div className="carousel">
+        <div className={styles.carousel}>
             {images ? (
                 <>
                     <img src={images[active]} alt="animal" data-testid="thumbnail" />
-                    <div className="carousel-smaller">
+                    <div className={styles.carousel_smaller}>
                         {images.map((photo, index) => (
                             <img
                                 key={photo}
@@ -22,7 +23,7 @@ const Carousel: React.FC<IProps> = ({ images }) => {
                                     if (evt.currentTarget.dataset.index)
                                         setActive(+evt.currentTarget.dataset.index)
                                 }}
-                                className={index === active ? "active" : ""}
+                                className={index === active ? styles.active : ""}
                                 alt="animal thumbnail"
                             />
                         ))}
