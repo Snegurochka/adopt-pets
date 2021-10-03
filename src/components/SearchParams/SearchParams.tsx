@@ -28,6 +28,14 @@ const SearchParams: React.FC = () => {
     );
     const json = (await res.json()) as PetAPIResponse;
 
+    // server doesn't have https, so I should use it
+    const resultPets = json.pets;
+    resultPets.forEach((pet, ind) => {
+      pet.images.forEach((img, ind_i) => {
+        resultPets[ind]['images'][ind_i] = img.replace('http', 'https');
+      })
+    })
+
     setPets(json.pets);
   }
 
