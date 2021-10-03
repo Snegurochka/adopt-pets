@@ -2,7 +2,6 @@
 import styles from "./SearchParams.module.css";
 
 import { useEffect, useState } from "react";
-// import ThemeContext from "../../context/ThemeContext";
 import useBreedList from "../../hooks/useBreedList";
 // types
 import { Animal, PetAPIResponse } from "../../interfaces/APIinterfases";
@@ -13,20 +12,19 @@ import Button from "../UI/Button/Button";
 
 const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
 
-const SearchParams:React.FC = () => {
+const SearchParams: React.FC = () => {
   const [animal, updateAnimal] = useState("" as Animal);
   const [location, updateLocation] = useState("");
   const [breed, updateBreed] = useState("");
   const [pets, setPets] = useState([] as IPet[]);
   const [breeds] = useBreedList(animal);
-  // const [theme, setTheme] = useContext(ThemeContext)
   useEffect(() => {
     requestPets();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function requestPets() {
     const res = await fetch(
-      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
+      `https://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
     const json = (await res.json()) as PetAPIResponse;
 
@@ -83,19 +81,6 @@ const SearchParams:React.FC = () => {
             ))}
           </select>
         </label>
-        {/* <label htmlFor="theme">
-          Theme
-          <select
-            value={theme}
-            onChange={(e) => setTheme(e.target.value)}
-            onBlur={(e) => setTheme(e.target.value)}
-          >
-            <option value="peru">Peru</option>
-            <option value="darkblue">Dark Blue</option>
-            <option value="chartreuse">Chartreuse</option>
-            <option value="mediumorchid">Medium Orchid</option>
-          </select>
-        </label> */}
         <Button appearance='primary' >Submit</Button>
       </form>
       <Results pets={pets} />
