@@ -4,6 +4,6 @@ import App from '../App';
 
 test('renders Adopt me! link', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Adopt me!/i);
+  const linkElement = screen.getByAltText(/Adopt me!/i);
   expect(linkElement).toBeInTheDocument();
 });

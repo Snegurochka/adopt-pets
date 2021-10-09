@@ -2,7 +2,7 @@
 
 exports[`snapshot with no pets 1`] = `
 <div
-  className="search"
+  className="wrapp"
 >
   <h2>
     No Pets
