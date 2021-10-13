@@ -32,7 +32,7 @@ const SearchParams: React.FC = () => {
     const resultPets = json.pets;
     resultPets.forEach((pet, ind) => {
       pet.images.forEach((img, ind_i) => {
-        resultPets[ind]['images'][ind_i] = img.replace('http', 'https');
+        //resultPets[ind]['images'][ind_i] = img.replace('http', 'https');
       })
     })
 
