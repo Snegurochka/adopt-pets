@@ -7,8 +7,6 @@ For example:
 - how to increase performance with code splitting (lazy, Suspense)*
 *I didn't use it on this project because it's too small, but it was very interesting information
 
-This was not my first React project, so I integrated my own experience into the project.
-
 Technologies used: 
 - React, React Hooks, Custom Hooks, 
 - TypeScript, JS,
@@ -16,3 +14,6 @@ Technologies used:
 - Jest (Unit tests, Snapshot tests)
 
 I used my own design for this project.
+
+Libs: 
+- react-slick - I used it for the slider on the home page

@@ -1,0 +1,4 @@
+.wrapper {
+    max-width : var(--maxWidth);
+    margin: 46px auto; 
+}
