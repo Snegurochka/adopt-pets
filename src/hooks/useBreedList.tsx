@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
+// APT
+import API from "../API";
 import { Animal, BreedListAPIResponse } from "../interfaces/APIinterfases";
 
 const localCache: {
-  [index: string] : string[];
+  [index: string]: string[];
 } = {};
 
-type Status = 'unloaded'| 'loaded' | 'loading';
+type Status = 'unloaded' | 'loaded' | 'loading';
 
 export default function useBreedList(animal: Animal): [string[], Status] {
   const [breedList, setBreedList] = useState([] as string[]);
@@ -20,14 +22,18 @@ export default function useBreedList(animal: Animal): [string[], Status] {
       requestBreedList();
     }
 
-    async function requestBreedList(){
+    async function requestBreedList() {
       setBreedList([]);
       setStatus("loading");
-      const res = await fetch(
-        `https://pets-v2.dev-apis.com/breeds?animal=${animal}`
-      );
-      const json = (await res.json()) as BreedListAPIResponse;
-      localCache[animal] = json.breeds || [];
+
+      const accessToken = (await API.oauthToken()).access_token;
+      const res = await API.fetchBreedList(animal, accessToken) as BreedListAPIResponse;
+      const breedList: string[] = [];
+      res.breeds.forEach((breed) => {
+        breedList.push(breed.name);
+      })
+
+      localCache[animal] = breedList;
       setBreedList(localCache[animal]);
       setStatus("loaded");
     }

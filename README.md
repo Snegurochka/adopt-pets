@@ -1,6 +1,8 @@
 This project was done after completing the course "Intermediate React" (Brian Holt)
 https://frontendmasters.com/learn/react/
 
+Petfinder.com is an online database of adoptable pets.
+
 I highly recommend this course! I learned a lot of interesting things. 
 For example:
 - how to use portals and modals,
