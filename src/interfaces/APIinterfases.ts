@@ -33,3 +33,7 @@ export interface PetAPIResponse {
     total_pages: number,
   }
 }
+
+export interface AnimalDetailsAPIResponse {
+  animal: IAnimal,
+}

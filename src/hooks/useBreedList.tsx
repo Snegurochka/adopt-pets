@@ -39,7 +39,7 @@ export default function useBreedList(animal: string): [string[], Status] {
       setBreedList(localCache[animal]);
       setStatus("loaded");
     }
-  }, [animal]);
+  }, [animal, accessToken.access_token]);
 
   return [breedList, status];
 }

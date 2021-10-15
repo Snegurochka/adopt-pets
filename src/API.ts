@@ -7,7 +7,7 @@ import {
 } from './config';
 
 
-import { AnimalListAPIResponse, BreedListAPIResponse, oauthTokenAPIResponse, PetAPIResponse } from './interfaces/APIinterfases';
+import { AnimalDetailsAPIResponse, AnimalListAPIResponse, BreedListAPIResponse, oauthTokenAPIResponse, PetAPIResponse } from './interfaces/APIinterfases';
 
 const API = {
     oauthToken: async (): Promise<oauthTokenAPIResponse> => {
@@ -45,6 +45,16 @@ const API = {
     },
     fetchAnimals: async (searchTerm: string, page: number, accessToken: string): Promise<PetAPIResponse> => {
         const endpoint = `${API_URL}animals${searchTerm}`;
+        return await (await fetch(endpoint,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        )).json();
+    },
+    fetchDetails: async (id:number, accessToken: string): Promise<AnimalDetailsAPIResponse> => {
+        const endpoint = `${API_URL}animals/${id}`;
         return await (await fetch(endpoint,
             {
                 headers: {

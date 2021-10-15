@@ -24,12 +24,21 @@ const SearchParams: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    async function getAccessToken() {
+      const newToken = (await API.oauthToken());
+      dispatch(setAccessToken(newToken));
+    }
     getAccessToken();
   }, []);
 
   useEffect(() => {
     if (accessToken.access_token.length) {
       requestAnimalTypes();
+    }
+    async function requestAnimalTypes() {
+      const res = await API.fetchAnimalTypes(accessToken.access_token);
+  
+      dispatch(setAnimalTypes(res.types));
     }
   }, [accessToken.access_token]);
 
@@ -39,24 +48,16 @@ const SearchParams: React.FC = () => {
     }
   }, [accessToken.access_token, animal]);
 
-  async function getAccessToken() {
-    const newToken = (await API.oauthToken());
-    dispatch(setAccessToken(newToken));
-  }
-
   async function requestPets() {
     let query = '';
     if (animal.currentAnimal.length) {
       query = `?type=${animal.currentAnimal.charAt(0).toLowerCase() + animal.currentAnimal.slice(1)}`;
+      if (breed) {
+        query +=`&breed=${breed}`;
+      }
     }
     const animals = await API.fetchAnimals(query, 1, accessToken.access_token);
     dispatch(setAnimals(animals));
-  }
-
-  async function requestAnimalTypes() {
-    const res = await API.fetchAnimalTypes(accessToken.access_token);
-
-    dispatch(setAnimalTypes(res.types));
   }
 
   const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
