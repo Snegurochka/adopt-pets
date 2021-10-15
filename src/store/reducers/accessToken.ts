@@ -5,7 +5,7 @@ import { SET_TOKEN } from './actionsTypes';
 const initState = {
     token_type: "Bearer",
     expires_in: 0,
-    access_token: 'TEST'
+    access_token: ''
 }
 
 const AccessTokenReducer = (state = initState as oauthTokenAPIResponse, action: IAccessTokenAction): oauthTokenAPIResponse => {

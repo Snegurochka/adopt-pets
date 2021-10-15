@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useBreedList from "../../hooks/useBreedList";
 import API from "../../API";
 
@@ -10,11 +10,9 @@ import setAnimals from '../../store/AC/animals';
 import changeAnimal from '../../store/AC/animal';
 import changeLocation from '../../store/AC/location';
 import changeBreed from '../../store/AC/breed';
-import changeTheme from '../../store/AC/theme';
 
 // types
-import { PetAPIResponse } from "../../interfaces/APIinterfases";
-import { AnimalTypes, IAnimal } from "../../interfaces/interfaces";
+import { AnimalTypes } from "../../interfaces/interfaces";
 
 //styles
 import styles from "./SearchParams.module.css";
@@ -26,20 +24,28 @@ import Button from "../UI/Button/Button";
 const ANIMALS: AnimalTypes[] = ["bird", "cat", "dog", "rabbit", "reptile"];
 
 const SearchParams: React.FC = () => {
-  const { animal, breed, location, theme } = useSelector((s: AppStateType) => s);
+  const { animal, breed, location, accessToken } = useSelector((s: AppStateType) => s);
   const [breeds] = useBreedList(animal);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    requestPets();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    getAccessToken();
+  }, []);
+
+  useEffect(() => {
+    if (accessToken.access_token.length) {
+      requestPets();
+    }
+  }, [accessToken.access_token, animal]);
+
+  async function getAccessToken() {
+    const newToken = (await API.oauthToken());
+    dispatch(setAccessToken(newToken));
+  }
 
   async function requestPets() {
-    const accessToken = (await API.oauthToken());
-    const animals = await API.fetchAnimals('', 1, accessToken.access_token);
-
-    dispatch(setAccessToken(accessToken));
+    const animals = await API.fetchAnimals(animal, 1, accessToken.access_token);
     dispatch(setAnimals(animals));
   }
 
@@ -55,7 +61,7 @@ const SearchParams: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      {/* <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler}>
         <label htmlFor="location">
           Location
           <input
@@ -99,7 +105,7 @@ const SearchParams: React.FC = () => {
           </select>
         </label>
         <Button appearance='primary' >Submit</Button>
-      </form> */}
+      </form>
       <Results />
     </div>
   );
