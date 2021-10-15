@@ -29,7 +29,7 @@ const SearchParams: React.FC = () => {
       dispatch(setAccessToken(newToken));
     }
     getAccessToken();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (accessToken.access_token.length) {
@@ -40,13 +40,13 @@ const SearchParams: React.FC = () => {
   
       dispatch(setAnimalTypes(res.types));
     }
-  }, [accessToken.access_token]);
+  }, [accessToken.access_token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (accessToken.access_token.length) {
       requestPets();
     }
-  }, [accessToken.access_token, animal]);
+  }, [accessToken.access_token, animal]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function requestPets() {
     let query = '';

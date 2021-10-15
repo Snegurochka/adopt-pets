@@ -5,12 +5,7 @@ const API_URL = 'https://api.petfinder.com/v2/';
 const API_KEY = process.env.REACT_APP_API_KEY || 'testKey';
 const API_S_KEY= process.env.REACT_APP_API_S_KEY || 'btBtW7RD06057BeDvz92jiaCCshnRgJlPMWMI1nU';
 
-const SEARCH_BASE_URL = `${API_URL}search`;
-const ANIMALS_URL = `${API_URL}animals`;
-
 export {
-    SEARCH_BASE_URL,
-    ANIMALS_URL,
     API_URL,
     API_KEY,
     API_S_KEY,

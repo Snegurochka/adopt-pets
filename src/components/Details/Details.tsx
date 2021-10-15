@@ -30,7 +30,7 @@ const Details: React.FC = () => {
             setPetInfo(res.animal);
         }
         requestDetails();
-    }, [petId]);
+    }, [petId]);// eslint-disable-line react-hooks/exhaustive-deps
 
     const adopt = () => {
         console.log('ok adopted');
