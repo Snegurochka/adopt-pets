@@ -1,7 +1,6 @@
 // styles
 import styles from "./Results.module.css";
-// types
-import { IAnimal } from "../../interfaces/interfaces";
+
 // components
 import Pet from "../Pet/Pet";
 import { useSelector } from "react-redux";

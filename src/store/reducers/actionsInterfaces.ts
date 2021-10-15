@@ -1,6 +1,11 @@
-import { PetAPIResponse } from "../../interfaces/APIinterfases";
+import { oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
 import { AnimalTypes } from "../../interfaces/interfaces";
-import { CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED, SET_ANIMALS } from "./actionsTypes";
+import { CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED, SET_ANIMALS, SET_TOKEN } from "./actionsTypes";
+
+export interface IAccessTokenAction {
+    type: typeof SET_TOKEN
+    payload: oauthTokenAPIResponse  
+}
 
 export interface IAnimalsAction {
     type: typeof SET_ANIMALS

@@ -5,6 +5,7 @@ import API from "../../API";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
+import setAccessToken from '../../store/AC/accessToken';
 import setAnimals from '../../store/AC/animals';
 import changeAnimal from '../../store/AC/animal';
 import changeLocation from '../../store/AC/location';
@@ -35,28 +36,11 @@ const SearchParams: React.FC = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function requestPets() {
-    const accessToken = (await API.oauthToken()).access_token;
-    const animals = await API.fetchAnimals('', 1, accessToken);
- 
+    const accessToken = (await API.oauthToken());
+    const animals = await API.fetchAnimals('', 1, accessToken.access_token);
+
+    dispatch(setAccessToken(accessToken));
     dispatch(setAnimals(animals));
-
-    //console.log(animals);
-    
-
-    // const res = await fetch(
-    //   `https://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
-    // );
-    // const json = (await res.json()) as PetAPIResponse;
-
-    // server doesn't have https, so I should use it
-    // const resultPets = json.pets;
-    // resultPets.forEach((pet, ind) => {
-    //   pet.images.forEach((img, ind_i) => {
-    //     //resultPets[ind]['images'][ind_i] = img.replace('http', 'https');
-    //   })
-    // })
-
-    //setPets(json.pets);
   }
 
   const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {

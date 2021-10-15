@@ -1,7 +1,3 @@
-import { PetAPIResponse } from "./APIinterfases";
-
-export type InitStateInterf = PetAPIResponse;
-
 export type AnimalTypes = "dog" | "cat" | "bird" | "reptile" | "rabbit";
 export type GenderTypes = "Female" | "Male";
 
