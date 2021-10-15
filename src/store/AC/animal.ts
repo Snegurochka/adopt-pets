@@ -1,8 +1,8 @@
-import { Animal } from "../../interfaces/APIinterfases";
+import { AnimalTypes } from "../../interfaces/interfaces";
 import { IAnimalAction } from "./../reducers/actionsInterfaces";
 import { CHANGE_ANIMAL } from './../reducers/actionsTypes';
 
-const changeAnimalAC = (animal:Animal):IAnimalAction => {
+const changeAnimalAC = (animal:AnimalTypes):IAnimalAction => {
     return {
         type: CHANGE_ANIMAL,
         payload: animal

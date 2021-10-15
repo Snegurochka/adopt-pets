@@ -1,5 +1,11 @@
-import { Animal } from "../../interfaces/APIinterfases";
-import { CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED } from "./actionsTypes";
+import { PetAPIResponse } from "../../interfaces/APIinterfases";
+import { AnimalTypes } from "../../interfaces/interfaces";
+import { CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED, SET_ANIMALS } from "./actionsTypes";
+
+export interface IAnimalsAction {
+    type: typeof SET_ANIMALS
+    payload: PetAPIResponse  
+}
 
 export interface ILocationAction {
     type: typeof CHANGE_LOCATION
@@ -13,7 +19,7 @@ export interface IThemeAction {
 
 export interface IAnimalAction {
     type: typeof CHANGE_ANIMAL
-    payload: Animal  
+    payload: AnimalTypes  
 }
 
 export interface IBreedAction {

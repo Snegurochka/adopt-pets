@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import useBreedList from "../../hooks/useBreedList";
+import API from "../../API";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
+import setAnimals from '../../store/AC/animals';
 import changeAnimal from '../../store/AC/animal';
 import changeLocation from '../../store/AC/location';
 import changeBreed from '../../store/AC/breed';
 import changeTheme from '../../store/AC/theme';
 
 // types
-import { Animal, PetAPIResponse } from "../../interfaces/APIinterfases";
-import { IPet } from "../../interfaces/interfaces";
+import { PetAPIResponse } from "../../interfaces/APIinterfases";
+import { AnimalTypes, IAnimal } from "../../interfaces/interfaces";
 
 //styles
 import styles from "./SearchParams.module.css";
@@ -19,11 +21,11 @@ import styles from "./SearchParams.module.css";
 import Results from "../Results/Results";
 import Button from "../UI/Button/Button";
 
-const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
+
+const ANIMALS: AnimalTypes[] = ["bird", "cat", "dog", "rabbit", "reptile"];
 
 const SearchParams: React.FC = () => {
   const { animal, breed, location, theme } = useSelector((s: AppStateType) => s);
-  const [pets, setPets] = useState([] as IPet[]);
   const [breeds] = useBreedList(animal);
 
   const dispatch = useDispatch();
@@ -33,20 +35,28 @@ const SearchParams: React.FC = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function requestPets() {
-    const res = await fetch(
-      `https://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
-    );
-    const json = (await res.json()) as PetAPIResponse;
+    const accessToken = (await API.oauthToken()).access_token;
+    const animals = await API.fetchAnimals('', 1, accessToken);
+ 
+    dispatch(setAnimals(animals));
+
+    //console.log(animals);
+    
+
+    // const res = await fetch(
+    //   `https://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
+    // );
+    // const json = (await res.json()) as PetAPIResponse;
 
     // server doesn't have https, so I should use it
-    const resultPets = json.pets;
-    resultPets.forEach((pet, ind) => {
-      pet.images.forEach((img, ind_i) => {
-        //resultPets[ind]['images'][ind_i] = img.replace('http', 'https');
-      })
-    })
+    // const resultPets = json.pets;
+    // resultPets.forEach((pet, ind) => {
+    //   pet.images.forEach((img, ind_i) => {
+    //     //resultPets[ind]['images'][ind_i] = img.replace('http', 'https');
+    //   })
+    // })
 
-    setPets(json.pets);
+    //setPets(json.pets);
   }
 
   const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
@@ -54,14 +64,14 @@ const SearchParams: React.FC = () => {
     requestPets();
   }
 
-  const animalChangeHandler = (value: Animal) => {
+  const animalChangeHandler = (value: AnimalTypes) => {
     dispatch(changeBreed(''));
-    dispatch(changeAnimal(value as Animal))
+    dispatch(changeAnimal(value as AnimalTypes))
   }
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={submitHandler}>
+      {/* <form onSubmit={submitHandler}>
         <label htmlFor="location">
           Location
           <input
@@ -76,8 +86,8 @@ const SearchParams: React.FC = () => {
           <select
             id="animal"
             value={animal}
-            onChange={(e) => animalChangeHandler(e.target.value as Animal)}
-            onBlur={(e) => animalChangeHandler(e.target.value as Animal)}
+            onChange={(e) => animalChangeHandler(e.target.value as AnimalTypes)}
+            onBlur={(e) => animalChangeHandler(e.target.value as AnimalTypes)}
           >
             <option />
             {ANIMALS.map((animal) => (
@@ -105,8 +115,8 @@ const SearchParams: React.FC = () => {
           </select>
         </label>
         <Button appearance='primary' >Submit</Button>
-      </form>
-      <Results pets={pets} />
+      </form> */}
+      <Results />
     </div>
   );
 };

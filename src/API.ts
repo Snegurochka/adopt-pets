@@ -23,12 +23,18 @@ const API = {
                 body: params,
             })).json();
     },
-    fetchAnimals: async (): Promise<PetAPIResponse> => {
-        const endpoint = `${API_URL}animals/?api_key=${API_KEY}`;
-        return await (await fetch(endpoint)).json();
-    },
     fetchBreedList: async (animal: string, accessToken: string): Promise<BreedListAPIResponse> => {
         const endpoint = `${API_URL}types/${animal}/breeds`;
+        return await (await fetch(endpoint,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        )).json();
+    },
+    fetchAnimals: async (searchTerm: string, page: number, accessToken: string): Promise<PetAPIResponse> => {
+        const endpoint = `${API_URL}animals/${searchTerm}`;
         return await (await fetch(endpoint,
             {
                 headers: {

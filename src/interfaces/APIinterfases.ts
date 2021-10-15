@@ -1,4 +1,4 @@
-import { IPet } from "./interfaces";
+import { AnimalTypes, IAnimal } from "./interfaces";
 
 export interface oauthTokenAPIResponse {
   token_type: "Bearer",
@@ -6,21 +6,21 @@ export interface oauthTokenAPIResponse {
   access_token: string
 }
 
-export type Animal = "dog" | "cat" | "bird" | "reptile" | "rabbit";
-
 export interface BreedListAPIResponse {
-  animal: Animal;
+  animal: AnimalTypes;
   breeds: BreedAPIResponse[];
 }
 
 export interface BreedAPIResponse {
-  name: string,  
+  name: string,
 }
 
 export interface PetAPIResponse {
-  numberOfResults: number;
-  startIndex: number;
-  endIndex: number;
-  hasNext: boolean;
-  pets: IPet[];
+  animals: IAnimal[],
+  pagination: {
+    count_per_page: number,
+    total_count: number,
+    current_page: number,
+    total_pages: number,
+  }
 }

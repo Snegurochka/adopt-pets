@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 // APT
 import API from "../API";
-import { Animal, BreedListAPIResponse } from "../interfaces/APIinterfases";
+import { AnimalTypes } from "../interfaces/interfaces";
+import { BreedListAPIResponse } from "../interfaces/APIinterfases";
 
 const localCache: {
   [index: string]: string[];
@@ -9,7 +10,7 @@ const localCache: {
 
 type Status = 'unloaded' | 'loaded' | 'loading';
 
-export default function useBreedList(animal: Animal): [string[], Status] {
+export default function useBreedList(animal: AnimalTypes): [string[], Status] {
   const [breedList, setBreedList] = useState([] as string[]);
   const [status, setStatus] = useState("unloaded" as Status);
 

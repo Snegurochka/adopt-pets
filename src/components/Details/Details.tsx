@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 //import ThemeContext from "../../context/ThemeContext";
 import styles from "./Details.module.css";
 
-import { IPet } from "../../interfaces/interfaces";
+import { IAnimal } from "../../interfaces/interfaces";
 
 // components
 import Carousel from "../Carousel/Carousel";
@@ -15,9 +15,9 @@ import Button from "../UI/Button/Button";
 
 const Details: React.FC = () => {
     const [loading, setLoading] = useState(true);
-    const [petInfo, setPetInfo] = useState({} as IPet);
+    const [petInfo, setPetInfo] = useState({} as IAnimal);
     const [showModal, setShowModal] = useState(false);
-    const { petId } = useParams<{petId: string}>();
+    const { petId } = useParams<{ petId: string }>();
     //const [theme] = useContext(ThemeContext);
 
     useEffect(() => {
@@ -32,22 +32,22 @@ const Details: React.FC = () => {
         requestDetails();
     }, [petId]);
 
-const adopt = () => {
-    console.log('ok adopted');
-    setShowModal(!showModal)
-}
+    const adopt = () => {
+        console.log('ok adopted');
+        setShowModal(!showModal)
+    }
 
-    const { animal, breed, city, state, description, name, images } = petInfo;
+    //const { animal, breed, city, state, description, name, images } = petInfo;
     return (
         <>
-            {loading ? <Spinner /> : (
+            {/* {loading ? <Spinner /> : (
                 <div className={styles.details}>
                     <Carousel images={images} />
                     <div>
                         <h1>{name}</h1>
                         <h2>{`${animal} — ${breed} — ${city}, ${state}`}</h2>
                         <Button
-                            onClick={() => {setShowModal(!showModal)}}
+                            onClick={() => { setShowModal(!showModal) }}
                         >Adopt {name}</Button>
                         <p>{description}</p>
                         {
@@ -64,7 +64,7 @@ const adopt = () => {
                         }
                     </div>
                 </div>
-            )}
+            )} */}
 
         </>
     );
