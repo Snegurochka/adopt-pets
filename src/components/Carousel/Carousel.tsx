@@ -12,12 +12,12 @@ const Carousel: React.FC<IProps> = ({ images }) => {
         <div className={styles.carousel}>
             {images ? (
                 <>
-                    {/* <img src={images[active]} alt="animal" data-testid="thumbnail" />
+                    <img src={images[active].large} alt="animal" data-testid="thumbnail" />
                     <div className={styles.carousel_smaller}>
                         {images.map((photo, index) => (
                             <img
-                                key={photo}
-                                src={photo}
+                                key={index}
+                                src={photo.small}
                                 data-index={index}
                                 data-testid={`thumbnail${index}`}
                                 onClick={(evt) => {
@@ -28,7 +28,7 @@ const Carousel: React.FC<IProps> = ({ images }) => {
                                 alt="animal thumbnail"
                             />
                         ))}
-                    </div> */}
+                    </div>
                 </>
             ) : (
                 <img src="http://pets-images.dev-apis.com/pets/none.jpg" alt="animal" />

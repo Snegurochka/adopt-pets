@@ -1,7 +1,8 @@
 export type GenderTypes = "Female" | "Male";
 
 export interface IPhotoAnimal {
-    small: string
+    small: string,
+    large: string
 }
 export interface IAnimal {
     id: number,
