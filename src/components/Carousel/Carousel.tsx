@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { IPhotoAnimal } from "../../interfaces/interfaces";
 import styles from "./Carousel.module.css";
 
 interface IProps {
-    images: string[]
+    images: IPhotoAnimal[]
 }
 
 const Carousel: React.FC<IProps> = ({ images }) => {
@@ -11,12 +12,12 @@ const Carousel: React.FC<IProps> = ({ images }) => {
         <div className={styles.carousel}>
             {images ? (
                 <>
-                    <img src={images[active]} alt="animal" data-testid="thumbnail" />
+                    <img src={images[active].large} alt="animal" data-testid="thumbnail" />
                     <div className={styles.carousel_smaller}>
                         {images.map((photo, index) => (
                             <img
-                                key={photo}
-                                src={photo}
+                                key={index}
+                                src={photo.small}
                                 data-index={index}
                                 data-testid={`thumbnail${index}`}
                                 onClick={(evt) => {

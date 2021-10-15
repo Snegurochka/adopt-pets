@@ -1,47 +1,73 @@
-//s tyles
-import styles from "./SearchParams.module.css";
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useBreedList from "../../hooks/useBreedList";
-// types
-import { Animal, PetAPIResponse } from "../../interfaces/APIinterfases";
-import { IPet } from "../../interfaces/interfaces";
+import API from "../../API";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { AppStateType } from "../../store/reducers";
+import setAccessToken from '../../store/AC/accessToken';
+import setAnimals from '../../store/AC/animals';
+import { changeAnimal, setAnimalTypes } from '../../store/AC/animal';
+import changeLocation from '../../store/AC/location';
+import changeBreed from '../../store/AC/breed';
+
+//styles
+import styles from "./SearchParams.module.css";
 // components
 import Results from "../Results/Results";
 import Button from "../UI/Button/Button";
 
-const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
-
 const SearchParams: React.FC = () => {
-  const [animal, updateAnimal] = useState("" as Animal);
-  const [location, updateLocation] = useState("");
-  const [breed, updateBreed] = useState("");
-  const [pets, setPets] = useState([] as IPet[]);
-  const [breeds] = useBreedList(animal);
+  const { animal, breed, location, accessToken } = useSelector((s: AppStateType) => s);
+  const [breeds] = useBreedList(animal.currentAnimal);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    requestPets();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    async function getAccessToken() {
+      const newToken = (await API.oauthToken());
+      dispatch(setAccessToken(newToken));
+    }
+    getAccessToken();
+  }, []);
+
+  useEffect(() => {
+    if (accessToken.access_token.length) {
+      requestAnimalTypes();
+    }
+    async function requestAnimalTypes() {
+      const res = await API.fetchAnimalTypes(accessToken.access_token);
+  
+      dispatch(setAnimalTypes(res.types));
+    }
+  }, [accessToken.access_token]);
+
+  useEffect(() => {
+    if (accessToken.access_token.length) {
+      requestPets();
+    }
+  }, [accessToken.access_token, animal]);
 
   async function requestPets() {
-    const res = await fetch(
-      `https://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
-    );
-    const json = (await res.json()) as PetAPIResponse;
-
-    // server doesn't have https, so I should use it
-    const resultPets = json.pets;
-    resultPets.forEach((pet, ind) => {
-      pet.images.forEach((img, ind_i) => {
-        //resultPets[ind]['images'][ind_i] = img.replace('http', 'https');
-      })
-    })
-
-    setPets(json.pets);
+    let query = '';
+    if (animal.currentAnimal.length) {
+      query = `?type=${animal.currentAnimal.charAt(0).toLowerCase() + animal.currentAnimal.slice(1)}`;
+      if (breed) {
+        query +=`&breed=${breed}`;
+      }
+    }
+    const animals = await API.fetchAnimals(query, 1, accessToken.access_token);
+    dispatch(setAnimals(animals));
   }
 
   const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     requestPets();
+  }
+
+  const animalChangeHandler = (value: string) => {
+    dispatch(changeBreed(''));
+    dispatch(changeAnimal(value as string))
   }
 
   return (
@@ -53,21 +79,21 @@ const SearchParams: React.FC = () => {
             id="location"
             value={location}
             placeholder="Location"
-            onChange={(e) => updateLocation(e.target.value)}
+            onChange={(e) => dispatch(changeLocation(e.target.value))}
           />
         </label>
         <label htmlFor="animal">
           Animal
           <select
             id="animal"
-            value={animal}
-            onChange={(e) => updateAnimal(e.target.value as Animal)}
-            onBlur={(e) => updateAnimal(e.target.value as Animal)}
+            value={animal.currentAnimal}
+            onChange={(e) => animalChangeHandler(e.target.value as string)}
+            onBlur={(e) => animalChangeHandler(e.target.value as string)}
           >
             <option />
-            {ANIMALS.map((animal) => (
-              <option key={animal} value={animal}>
-                {animal}
+            {animal.animalTypes.map((animal) => (
+              <option key={animal.name} value={animal.name}>
+                {animal.name}
               </option>
             ))}
           </select>
@@ -78,8 +104,8 @@ const SearchParams: React.FC = () => {
             disabled={!breeds.length}
             id="breed"
             value={breed}
-            onChange={(e) => updateBreed(e.target.value)}
-            onBlur={(e) => updateBreed(e.target.value)}
+            onChange={(e) => dispatch(changeBreed(e.target.value))}
+            onBlur={(e) => dispatch(changeBreed(e.target.value))}
           >
             <option />
             {breeds.map((breed) => (
@@ -91,7 +117,7 @@ const SearchParams: React.FC = () => {
         </label>
         <Button appearance='primary' >Submit</Button>
       </form>
-      <Results pets={pets} />
+      <Results />
     </div>
   );
 };

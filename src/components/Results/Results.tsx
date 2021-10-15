@@ -1,28 +1,31 @@
 // styles
 import styles from "./Results.module.css";
-// types
-import { IPet } from "../../interfaces/interfaces";
+
 // components
 import Pet from "../Pet/Pet";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../store/reducers";
 
 interface IProps {
-    pets:  IPet[]
 }
 
-const Results: React.FC<IProps> = ({ pets }) => {
+const Results: React.FC<IProps> = () => {
+    const { animals } = useSelector((s: AppStateType) => s);
+
+    console.log(animals);
+
+
     return (
         <div className={styles.wrapp}>
-            {!pets.length ? (<h2>No Pets</h2>) : (
-                pets.map((pet) => (
+            {!animals.animals.length ? (<h2>No Pets</h2>) : (
+                animals.animals.map((pet, ind) => (
                     <Pet
-                        key={pet.id}
+                        key={`${ind}-${pet.id}`}
                         id={pet.id}
                         name={pet.name}
-                        animal={pet.animal}
-                        breed={pet.breed}
-
-                        images={pet.images}
-                        location={`${pet.city}, ${pet.state}`}
+                        animal={pet.type}
+                        breed={pet.breeds.primary}
+                        images={pet.photos}
                     />
                 ))
             )}

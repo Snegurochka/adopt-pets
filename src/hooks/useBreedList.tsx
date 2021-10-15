@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
-import { Animal, BreedListAPIResponse } from "../interfaces/APIinterfases";
+// APT
+import API from "../API";
+import { BreedListAPIResponse } from "../interfaces/APIinterfases";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../store/reducers";
 
 const localCache: {
-  [index: string] : string[];
+  [index: string]: string[];
 } = {};
 
-type Status = 'unloaded'| 'loaded' | 'loading';
+type Status = 'unloaded' | 'loaded' | 'loading';
 
-export default function useBreedList(animal: Animal): [string[], Status] {
+export default function useBreedList(animal: string): [string[], Status] {
   const [breedList, setBreedList] = useState([] as string[]);
   const [status, setStatus] = useState("unloaded" as Status);
+  const { accessToken } = useSelector((s: AppStateType) => s);
 
   useEffect(() => {
     if (!animal) {
@@ -20,18 +25,21 @@ export default function useBreedList(animal: Animal): [string[], Status] {
       requestBreedList();
     }
 
-    async function requestBreedList(){
+    async function requestBreedList() {
       setBreedList([]);
       setStatus("loading");
-      const res = await fetch(
-        `https://pets-v2.dev-apis.com/breeds?animal=${animal}`
-      );
-      const json = (await res.json()) as BreedListAPIResponse;
-      localCache[animal] = json.breeds || [];
+
+      const res = await API.fetchBreedList(animal, accessToken.access_token) as BreedListAPIResponse;
+      const breedList: string[] = [];
+      res.breeds.forEach((breed) => {
+        breedList.push(breed.name);
+      })
+
+      localCache[animal] = breedList;
       setBreedList(localCache[animal]);
       setStatus("loaded");
     }
-  }, [animal]);
+  }, [animal, accessToken.access_token]);
 
   return [breedList, status];
 }

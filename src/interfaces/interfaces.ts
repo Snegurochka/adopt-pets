@@ -1,10 +1,21 @@
-export interface IPet { 
+export type GenderTypes = "Female" | "Male";
+
+export interface IPhotoAnimal {
+    small: string,
+    large: string
+}
+export interface IAnimal {
     id: number,
-    animal :string,
-    breed: string, 
-    city:string, 
-    state:string, 
-    description:string, 
-    name:string, 
-    images:string[]
- }
+    organization_id: string,
+    url: string,
+    type: string,
+    species: string,
+    name: string,
+    breeds: {
+        primary: string
+    }
+    age: string,
+    gender: GenderTypes,
+    description: string,
+    photos: IPhotoAnimal[],
+}
