@@ -1,4 +1,3 @@
-export type AnimalTypes = "dog" | "cat" | "bird" | "reptile" | "rabbit";
 export type GenderTypes = "Female" | "Male";
 
 export interface IPhotoAnimal {
@@ -8,7 +7,7 @@ export interface IAnimal {
     id: number,
     organization_id: string,
     url: string,
-    type: AnimalTypes,
+    type: string,
     species: string,
     name: string,
     breeds: {

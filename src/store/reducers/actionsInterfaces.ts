@@ -1,6 +1,5 @@
-import { oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
-import { AnimalTypes } from "../../interfaces/interfaces";
-import { CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED, SET_ANIMALS, SET_TOKEN } from "./actionsTypes";
+import { AnimalTypesResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
+import { CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED, SET_ANIMALS, SET_TOKEN, SET_ANIMAL } from "./actionsTypes";
 
 export interface IAccessTokenAction {
     type: typeof SET_TOKEN
@@ -22,12 +21,19 @@ export interface IThemeAction {
     payload: string
 }
 
-export interface IAnimalAction {
-    type: typeof CHANGE_ANIMAL
-    payload: AnimalTypes  
+interface IAnimalSetAction {
+    type: typeof SET_ANIMAL
+    payload: AnimalTypesResponse[]
+}
+
+interface IAnimalChangeAction {
+    type: typeof CHANGE_ANIMAL 
+    payload: string  
 }
 
 export interface IBreedAction {
     type: typeof CHANGE_BREED
     payload: string   
 }
+
+export type IAnimalAction = IAnimalSetAction | IAnimalChangeAction;

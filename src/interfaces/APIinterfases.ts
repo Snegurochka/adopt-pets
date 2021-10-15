@@ -1,4 +1,4 @@
-import { AnimalTypes, IAnimal } from "./interfaces";
+import { IAnimal } from "./interfaces";
 
 export interface oauthTokenAPIResponse {
   token_type: "Bearer",
@@ -6,8 +6,17 @@ export interface oauthTokenAPIResponse {
   access_token: string
 }
 
+export interface AnimalListAPIResponse {
+  types: AnimalTypesResponse[];
+}
+
+export interface AnimalTypesResponse {
+  name: string;
+  _links: { self: string }
+}
+
 export interface BreedListAPIResponse {
-  animal: AnimalTypes;
+  animal: string[];
   breeds: BreedAPIResponse[];
 }
 

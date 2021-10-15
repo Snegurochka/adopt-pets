@@ -7,7 +7,7 @@ import {
 } from './config';
 
 
-import { BreedListAPIResponse, oauthTokenAPIResponse, PetAPIResponse } from './interfaces/APIinterfases';
+import { AnimalListAPIResponse, BreedListAPIResponse, oauthTokenAPIResponse, PetAPIResponse } from './interfaces/APIinterfases';
 
 const API = {
     oauthToken: async (): Promise<oauthTokenAPIResponse> => {
@@ -23,6 +23,16 @@ const API = {
                 body: params,
             })).json();
     },
+    fetchAnimalTypes: async (accessToken: string): Promise<AnimalListAPIResponse> => {
+        const endpoint = `${API_URL}types`;
+        return await (await fetch(endpoint,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        )).json();
+    },
     fetchBreedList: async (animal: string, accessToken: string): Promise<BreedListAPIResponse> => {
         const endpoint = `${API_URL}types/${animal}/breeds`;
         return await (await fetch(endpoint,
@@ -34,7 +44,7 @@ const API = {
         )).json();
     },
     fetchAnimals: async (searchTerm: string, page: number, accessToken: string): Promise<PetAPIResponse> => {
-        const endpoint = `${API_URL}animals/${searchTerm}`;
+        const endpoint = `${API_URL}animals${searchTerm}`;
         return await (await fetch(endpoint,
             {
                 headers: {

@@ -16,7 +16,7 @@ const initState = {
 const AnimalsReducer = (state = initState as PetAPIResponse, action: IAnimalsAction): PetAPIResponse => {
     switch (action.type) {
         case SET_ANIMALS:
-            return { ...state, animals: [...state.animals, ...action.payload.animals] };
+            return { ...state, animals: action.payload.animals };
         default:
             return state;
     }

@@ -7,12 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
 import setAccessToken from '../../store/AC/accessToken';
 import setAnimals from '../../store/AC/animals';
-import changeAnimal from '../../store/AC/animal';
+import { changeAnimal, setAnimalTypes } from '../../store/AC/animal';
 import changeLocation from '../../store/AC/location';
 import changeBreed from '../../store/AC/breed';
-
-// types
-import { AnimalTypes } from "../../interfaces/interfaces";
 
 //styles
 import styles from "./SearchParams.module.css";
@@ -20,18 +17,21 @@ import styles from "./SearchParams.module.css";
 import Results from "../Results/Results";
 import Button from "../UI/Button/Button";
 
-
-const ANIMALS: AnimalTypes[] = ["bird", "cat", "dog", "rabbit", "reptile"];
-
 const SearchParams: React.FC = () => {
   const { animal, breed, location, accessToken } = useSelector((s: AppStateType) => s);
-  const [breeds] = useBreedList(animal);
+  const [breeds] = useBreedList(animal.currentAnimal);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     getAccessToken();
   }, []);
+
+  useEffect(() => {
+    if (accessToken.access_token.length) {
+      requestAnimalTypes();
+    }
+  }, [accessToken.access_token]);
 
   useEffect(() => {
     if (accessToken.access_token.length) {
@@ -45,8 +45,18 @@ const SearchParams: React.FC = () => {
   }
 
   async function requestPets() {
-    const animals = await API.fetchAnimals(animal, 1, accessToken.access_token);
+    let query = '';
+    if (animal.currentAnimal.length) {
+      query = `?type=${animal.currentAnimal.charAt(0).toLowerCase() + animal.currentAnimal.slice(1)}`;
+    }
+    const animals = await API.fetchAnimals(query, 1, accessToken.access_token);
     dispatch(setAnimals(animals));
+  }
+
+  async function requestAnimalTypes() {
+    const res = await API.fetchAnimalTypes(accessToken.access_token);
+
+    dispatch(setAnimalTypes(res.types));
   }
 
   const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
@@ -54,9 +64,9 @@ const SearchParams: React.FC = () => {
     requestPets();
   }
 
-  const animalChangeHandler = (value: AnimalTypes) => {
+  const animalChangeHandler = (value: string) => {
     dispatch(changeBreed(''));
-    dispatch(changeAnimal(value as AnimalTypes))
+    dispatch(changeAnimal(value as string))
   }
 
   return (
@@ -75,14 +85,14 @@ const SearchParams: React.FC = () => {
           Animal
           <select
             id="animal"
-            value={animal}
-            onChange={(e) => animalChangeHandler(e.target.value as AnimalTypes)}
-            onBlur={(e) => animalChangeHandler(e.target.value as AnimalTypes)}
+            value={animal.currentAnimal}
+            onChange={(e) => animalChangeHandler(e.target.value as string)}
+            onBlur={(e) => animalChangeHandler(e.target.value as string)}
           >
             <option />
-            {ANIMALS.map((animal) => (
-              <option key={animal} value={animal}>
-                {animal}
+            {animal.animalTypes.map((animal) => (
+              <option key={animal.name} value={animal.name}>
+                {animal.name}
               </option>
             ))}
           </select>

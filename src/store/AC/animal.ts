@@ -1,11 +1,18 @@
-import { AnimalTypes } from "../../interfaces/interfaces";
+import { AnimalTypesResponse } from "../../interfaces/APIinterfases";
 import { IAnimalAction } from "./../reducers/actionsInterfaces";
-import { CHANGE_ANIMAL } from './../reducers/actionsTypes';
+import { CHANGE_ANIMAL, SET_ANIMAL } from './../reducers/actionsTypes';
 
-const changeAnimalAC = (animal:AnimalTypes):IAnimalAction => {
+export const changeAnimal = (animal:string):IAnimalAction => {
     return {
         type: CHANGE_ANIMAL,
         payload: animal
     }
 }
-export default changeAnimalAC;
+
+export const setAnimalTypes = (animals:AnimalTypesResponse[]):IAnimalAction => {
+    return {
+        type: SET_ANIMAL,
+        payload: animals
+    }
+}
+

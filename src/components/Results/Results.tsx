@@ -11,12 +11,16 @@ interface IProps {
 
 const Results: React.FC<IProps> = () => {
     const { animals } = useSelector((s: AppStateType) => s);
+
+    console.log(animals);
+
+
     return (
         <div className={styles.wrapp}>
             {!animals.animals.length ? (<h2>No Pets</h2>) : (
-                animals.animals.map((pet) => (
+                animals.animals.map((pet, ind) => (
                     <Pet
-                        key={pet.id}
+                        key={`${ind}-${pet.id}`}
                         id={pet.id}
                         name={pet.name}
                         animal={pet.type}
