@@ -1,11 +1,20 @@
-//s tyles
-import styles from "./SearchParams.module.css";
-
 import { useEffect, useState } from "react";
 import useBreedList from "../../hooks/useBreedList";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { AppStateType } from "../../store/reducers";
+import changeAnimal from '../../store/AC/animal';
+import changeLocation from '../../store/AC/location';
+import changeBreed from '../../store/AC/breed';
+import changeTheme from '../../store/AC/theme';
+
 // types
 import { Animal, PetAPIResponse } from "../../interfaces/APIinterfases";
 import { IPet } from "../../interfaces/interfaces";
+
+//styles
+import styles from "./SearchParams.module.css";
 // components
 import Results from "../Results/Results";
 import Button from "../UI/Button/Button";
@@ -13,11 +22,12 @@ import Button from "../UI/Button/Button";
 const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
 
 const SearchParams: React.FC = () => {
-  const [animal, updateAnimal] = useState("" as Animal);
-  const [location, updateLocation] = useState("");
-  const [breed, updateBreed] = useState("");
+  const { animal, breed, location, theme } = useSelector((s: AppStateType) => s);
   const [pets, setPets] = useState([] as IPet[]);
   const [breeds] = useBreedList(animal);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     requestPets();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -44,6 +54,11 @@ const SearchParams: React.FC = () => {
     requestPets();
   }
 
+  const animalChangeHandler = (value: Animal) => {
+    dispatch(changeBreed(''));
+    dispatch(changeAnimal(value as Animal))
+  }
+
   return (
     <div className={styles.wrapper}>
       <form onSubmit={submitHandler}>
@@ -53,7 +68,7 @@ const SearchParams: React.FC = () => {
             id="location"
             value={location}
             placeholder="Location"
-            onChange={(e) => updateLocation(e.target.value)}
+            onChange={(e) => dispatch(changeLocation(e.target.value))}
           />
         </label>
         <label htmlFor="animal">
@@ -61,8 +76,8 @@ const SearchParams: React.FC = () => {
           <select
             id="animal"
             value={animal}
-            onChange={(e) => updateAnimal(e.target.value as Animal)}
-            onBlur={(e) => updateAnimal(e.target.value as Animal)}
+            onChange={(e) => animalChangeHandler(e.target.value as Animal)}
+            onBlur={(e) => animalChangeHandler(e.target.value as Animal)}
           >
             <option />
             {ANIMALS.map((animal) => (
@@ -78,8 +93,8 @@ const SearchParams: React.FC = () => {
             disabled={!breeds.length}
             id="breed"
             value={breed}
-            onChange={(e) => updateBreed(e.target.value)}
-            onBlur={(e) => updateBreed(e.target.value)}
+            onChange={(e) => dispatch(changeBreed(e.target.value))}
+            onBlur={(e) => dispatch(changeBreed(e.target.value))}
           >
             <option />
             {breeds.map((breed) => (

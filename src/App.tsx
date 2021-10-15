@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ThemeContext from "./context/ThemeContext";
+import { Provider } from "react-redux";
+import store from "./store/store";
 // components
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
@@ -8,10 +8,8 @@ import Details from './components/Details/Details';
 import Footer from './components/Footer/Footer';
 
 const App: React.FC = () => {
-  const theme = useState("darkblue");
-
   return (
-    <ThemeContext.Provider value={theme}>
+    <Provider store={store}>
       <BrowserRouter>
         <Header />
         <Switch>
@@ -20,7 +18,7 @@ const App: React.FC = () => {
         </Switch>
         <Footer />
       </BrowserRouter>
-    </ThemeContext.Provider>
+    </Provider>
   );
 }
 
