@@ -1,6 +1,4 @@
 import {
-    SEARCH_BASE_URL,
-    ANIMALS_URL,
     API_URL,
     API_KEY,
     API_S_KEY
