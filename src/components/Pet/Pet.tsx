@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { IPhotoAnimal } from "../../interfaces/interfaces";
 //import { IPet } from "../../interfaces/interfaces";
 import styles from "./Pet.module.css";
-import noneImg from '../../img/none.png'
+import noneImg from '../../img/none.png';
 
 //type Props = IPet & {location: string}
 interface IProps {

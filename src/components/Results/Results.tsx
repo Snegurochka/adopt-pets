@@ -11,10 +11,6 @@ interface IProps {
 
 const Results: React.FC<IProps> = () => {
     const { animals } = useSelector((s: AppStateType) => s);
-
-    console.log(animals);
-
-
     return (
         <div className={styles.wrapp}>
             {!animals.animals.length ? (<h2>No Pets</h2>) : (
