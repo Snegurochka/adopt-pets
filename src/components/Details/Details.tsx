@@ -42,7 +42,7 @@ const Details: React.FC = () => {
         <>
             {loading ? <Spinner /> : (
                 <div className={styles.details}>
-                    <Carousel images={photos} />
+                    {photos && <Carousel images={photos} />}
                     <div>
                         <h1>{name}</h1>
                         <h2>{`${type} — ${breeds?.primary}`}</h2>
