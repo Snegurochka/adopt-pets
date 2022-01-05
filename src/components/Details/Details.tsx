@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
+
 //import ThemeContext from "../../context/ThemeContext";
 import styles from "./Details.module.css";
 
@@ -18,6 +19,7 @@ import API from "../../API";
 
 const Details: React.FC = () => {
     const { accessToken } = useSelector((s: AppStateType) => s);
+    const { isLoggin } = useSelector((s: AppStateType) => s.auth);
     const [loading, setLoading] = useState(true);
     const [petInfo, setPetInfo] = useState({} as IAnimal);
     const [showModal, setShowModal] = useState(false);
@@ -46,9 +48,13 @@ const Details: React.FC = () => {
                     <div>
                         <h1>{name}</h1>
                         <h2>{`${type} — ${breeds?.primary}`}</h2>
-                        <Button
-                            onClick={() => { setShowModal(!showModal) }}
-                        >Adopt {name}</Button>
+                        <div className={styles.addopt_wrapp}>
+                        {isLoggin ? (
+                            <Button onClick={() => { setShowModal(!showModal) }}>
+                                Adopt {name}
+                            </Button>
+                        ) : (<span>If you want to adopt this pet, please log in</span>)}
+                        </div>
                         <p>{description}</p>
                         {
                             showModal ?

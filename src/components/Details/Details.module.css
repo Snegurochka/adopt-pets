@@ -25,6 +25,11 @@
     margin    : 5px 0px 20px 0px;
 }
 
+.addopt_wrapp {
+    text-align: center;
+    margin: 24px auto;
+}
+
 @media only screen and (max-width: 1129px) {
     .details {
         width        : 95%;
