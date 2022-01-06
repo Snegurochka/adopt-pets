@@ -4,6 +4,9 @@ import { IPhotoAnimal } from "../../interfaces/interfaces";
 import styles from "./Pet.module.css";
 import noneImg from '../../img/none.png';
 
+// components
+import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
+
 //type Props = IPet & {location: string}
 interface IProps {
   name: string;
@@ -21,9 +24,9 @@ const Pet: React.FC<IProps> = ({ id, name, animal, breed, images }) => {
           images.length
             ? images[0].small
             : noneImg} alt={name} />
-
       </div>
       <div className={styles.info}>
+        <FavoriteBtn />
         <h3>{name}</h3>
         <p>{`${animal} — ${breed}`}</p>
       </div>

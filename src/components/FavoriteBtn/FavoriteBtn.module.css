@@ -1,0 +1,10 @@
+.favorite_icon {
+    position  : absolute;
+    top       : -6px;
+    left      : -40px;
+    transition: all 0.3s ease;
+}
+
+.favorite_icon:hover {
+    transform: scale(1.2);
+}

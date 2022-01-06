@@ -6,7 +6,7 @@
 	height: 36px;
 
 	cursor: pointer;
-	transition: all 0.2s;
+	transition: all 0.3s ease;
 	text-align: center;
 
 	border: none;
@@ -20,6 +20,7 @@
 
 .button:hover {
 	background-color: var(--primary-hover);
+	transform: scale(1.1);
 }
 
 .primary {
