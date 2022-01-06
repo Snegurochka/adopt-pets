@@ -14,23 +14,28 @@ interface IProps {
   breed: string;
   images: IPhotoAnimal[];
   id: number;
+  isFavorite: boolean;
 }
 
-const Pet: React.FC<IProps> = ({ id, name, animal, breed, images }) => {
+const Pet: React.FC<IProps> = ({ id, name, animal, breed, images, isFavorite }) => {
   return (
-    <Link to={`/details/${id}`} className={styles.pet}>
+    <div className={styles.pet}>
       <div className={styles.image}>
-        <img data-testid="thumbnail" src={
-          images.length
-            ? images[0].small
-            : noneImg} alt={name} />
+        <Link to={`/details/${id}`}>
+          <img data-testid="thumbnail" src={
+            images.length
+              ? images[0].small
+              : noneImg} alt={name} />
+        </Link>
       </div>
       <div className={styles.info}>
-        <FavoriteBtn />
-        <h3>{name}</h3>
+        <FavoriteBtn id={id} name={name} isFavorite={isFavorite} />
+        <Link to={`/details/${id}`}>
+          <h3>{name}</h3>
+        </Link>
         <p>{`${animal} — ${breed}`}</p>
       </div>
-    </Link>
+    </div>
   );
 };
 
