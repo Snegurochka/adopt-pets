@@ -15,6 +15,7 @@ import Button from "../UI/Button/Button";
 import { useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
 import API from "../../API";
+import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
 
 
 const Details: React.FC = () => {
@@ -39,21 +40,24 @@ const Details: React.FC = () => {
         setShowModal(!showModal)
     }
 
-    const { type, breeds, description, name, photos } = petInfo;
+    const { id, type, breeds, description, name, photos } = petInfo;
     return (
         <>
             {loading ? <Spinner /> : (
                 <div className={styles.details}>
+                    {isLoggin
+                        ? <FavoriteBtn id={id} name={name} isFavorite={true} />
+                        : null}
                     {photos && <Carousel images={photos} />}
                     <div>
                         <h1>{name}</h1>
                         <h2>{`${type} — ${breeds?.primary}`}</h2>
                         <div className={styles.addopt_wrapp}>
-                        {isLoggin ? (
-                            <Button onClick={() => { setShowModal(!showModal) }}>
-                                Adopt {name}
-                            </Button>
-                        ) : (<span>If you want to adopt this pet, please log in</span>)}
+                            {isLoggin ? (
+                                <Button onClick={() => { setShowModal(!showModal) }}>
+                                    Adopt {name}
+                                </Button>
+                            ) : (<span>If you want to adopt this pet, please log in</span>)}
                         </div>
                         <p>{description}</p>
                         {

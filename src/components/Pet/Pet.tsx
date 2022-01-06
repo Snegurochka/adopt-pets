@@ -6,6 +6,8 @@ import noneImg from '../../img/none.png';
 
 // components
 import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../store/reducers";
 
 //type Props = IPet & {location: string}
 interface IProps {
@@ -18,6 +20,7 @@ interface IProps {
 }
 
 const Pet: React.FC<IProps> = ({ id, name, animal, breed, images, isFavorite }) => {
+  const { isLoggin } = useSelector((s: AppStateType) => s.auth)
   return (
     <div className={styles.pet}>
       <div className={styles.image}>
@@ -29,7 +32,9 @@ const Pet: React.FC<IProps> = ({ id, name, animal, breed, images, isFavorite }) 
         </Link>
       </div>
       <div className={styles.info}>
-        <FavoriteBtn id={id} name={name} isFavorite={isFavorite} />
+        {isLoggin
+          ? <FavoriteBtn id={id} name={name} isFavorite={isFavorite} btnClass="list"/>
+          : null}
         <Link to={`/details/${id}`}>
           <h3>{name}</h3>
         </Link>
