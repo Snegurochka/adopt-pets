@@ -1,11 +1,13 @@
 import {
     API_URL,
     API_KEY,
-    API_S_KEY
+    API_S_KEY,
+    API_BD_URL
 } from './config';
 
 
-import { AnimalDetailsAPIResponse, AnimalListAPIResponse, BreedListAPIResponse, oauthTokenAPIResponse, PetAPIResponse } from './interfaces/APIinterfases';
+import { AnimalDetailsAPIResponse, AnimalListAPIResponse, BreedListAPIResponse, FavoritesAPIResponse, oauthTokenAPIResponse, PetAPIResponse } from './interfaces/APIinterfases';
+import { IFavoriteAnimal } from './interfaces/interfaces';
 
 const API = {
     oauthToken: async (): Promise<oauthTokenAPIResponse> => {
@@ -60,7 +62,14 @@ const API = {
                 },
             }
         )).json();
-    }
+    },
+    addFavoriteAnimals:async (animal: IFavoriteAnimal): Promise<FavoritesAPIResponse> => {
+        const resp = await fetch(`${API_BD_URL}favorites`, {
+            method: 'POST',
+            body: JSON.stringify({ id: animal.id, name: animal.name }),
+        });
+        return resp.json();
+    },
 }
 
 export default API;

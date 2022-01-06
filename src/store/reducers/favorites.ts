@@ -11,7 +11,7 @@ export type initStateType = typeof initState;
 const FavoritesReducer = (state = initState as initStateType, action: IFavoritesAction): initStateType => {
     switch (action.type) {
         case ADD_FAV_ANIMAL:
-            return { ...state, animals:  [...state.animals, {...action.payload}] };
+            return { ...state, animals:  [...state.animals, action.payload] };
         default:
             return state;
     }

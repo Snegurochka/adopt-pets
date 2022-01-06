@@ -37,3 +37,7 @@ export interface PetAPIResponse {
 export interface AnimalDetailsAPIResponse {
   animal: IAnimal,
 }
+
+export interface FavoritesAPIResponse {
+  error: boolean;
+}
