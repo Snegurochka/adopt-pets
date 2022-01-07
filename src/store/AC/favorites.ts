@@ -1,8 +1,8 @@
 import { Dispatch } from "react";
-//import API from "../../API";
+import API from "../../API";
 import { IFavoriteAnimal } from "../../interfaces/interfaces";
 import { IFavoritesAction } from "./../reducers/actionsInterfaces";
-import { ADD_FAV_ANIMAL } from './../reducers/actionsTypes';
+import { ADD_FAV_ANIMAL, ADD_FAV_ANIMALS } from './../reducers/actionsTypes';
 
 const addFavoriteAnimal = (animal: IFavoriteAnimal): IFavoritesAction => {
     return {
@@ -11,10 +11,19 @@ const addFavoriteAnimal = (animal: IFavoriteAnimal): IFavoritesAction => {
     }
 }
 
-const setFavoriteAnimal = (animal: IFavoriteAnimal) => async (dispatch:Dispatch<IFavoritesAction>) => {
-    //await API.addFavoriteAnimals(animal);
+const setFavoriteAnimals = (animals: IFavoriteAnimal[]): IFavoritesAction => {
+    return {
+        type: ADD_FAV_ANIMALS,
+        payload: animals
+    }
+}
+
+export const setFavoriteAnimal = (animal: IFavoriteAnimal) => async (dispatch:Dispatch<IFavoritesAction>) => {
+    //await API.addFavoriteAnimal(animal);
     dispatch(addFavoriteAnimal(animal));
 }
 
-
-export default setFavoriteAnimal;
+export const fetchFavoriteAnimals = (id: number) => async (dispatch:Dispatch<IFavoritesAction>) => {
+    const animals = await API.fetchFavoriteAnimals(id);
+    dispatch(setFavoriteAnimals(animals));
+}

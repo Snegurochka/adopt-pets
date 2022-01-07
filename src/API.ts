@@ -63,12 +63,16 @@ const API = {
             }
         )).json();
     },
-    addFavoriteAnimals:async (animal: IFavoriteAnimal): Promise<FavoritesAPIResponse> => {
-        const resp = await fetch(`${API_BD_URL}favorites`, {
+    addFavoriteAnimal:async (animal: IFavoriteAnimal): Promise<FavoritesAPIResponse> => {
+        const resp = await fetch(`${API_BD_URL}favorites.json`, {
             method: 'POST',
             body: JSON.stringify({ id: animal.id, name: animal.name }),
         });
         return resp.json();
+    },
+    fetchFavoriteAnimals:async (id: number): Promise<IFavoriteAnimal[]> => {
+        const resp = await fetch(`${API_BD_URL}favorites/${id}.json`);
+        return await resp.json();
     },
 }
 

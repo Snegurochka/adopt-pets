@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import setFavoriteAnimal from '../../store/AC/favorites';
+import { setFavoriteAnimal } from '../../store/AC/favorites';
 
 import styles from "./FavoriteBtn.module.css";
 
