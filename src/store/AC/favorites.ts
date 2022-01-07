@@ -18,12 +18,12 @@ const setFavoriteAnimals = (animals: IFavoriteAnimal[]): IFavoritesAction => {
     }
 }
 
-export const setFavoriteAnimal = (animal: IFavoriteAnimal) => async (dispatch:Dispatch<IFavoritesAction>) => {
+export const setFavoriteAnimal = (animal: IFavoriteAnimal) => async (dispatch: Dispatch<IFavoritesAction>) => {
     //await API.addFavoriteAnimal(animal);
     dispatch(addFavoriteAnimal(animal));
 }
 
-export const fetchFavoriteAnimals = (id: number) => async (dispatch:Dispatch<IFavoritesAction>) => {
+export const fetchFavoriteAnimals = (id: number) => async (dispatch: Dispatch<IFavoritesAction>) => {
     const animals = await API.fetchFavoriteAnimals(id);
     dispatch(setFavoriteAnimals(animals));
 }

@@ -1,13 +1,12 @@
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../store/reducers";
 
 // styles
 import styles from "./Results.module.css";
 
 // components
 import Pet from "../Pet/Pet";
-import { useSelector } from "react-redux";
-import { AppStateType } from "../../store/reducers";
-
 
 interface IProps {
 }
