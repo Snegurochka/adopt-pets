@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from 'react-router-dom';
 
 //import ThemeContext from "../../context/ThemeContext";
@@ -19,7 +19,7 @@ import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
 
 
 const Details: React.FC = () => {
-    const { accessToken } = useSelector((s: AppStateType) => s);
+    const { accessToken, favorites } = useSelector((s: AppStateType) => s);
     const { isLoggin } = useSelector((s: AppStateType) => s.auth);
     const [loading, setLoading] = useState(true);
     const [petInfo, setPetInfo] = useState({} as IAnimal);
@@ -41,12 +41,13 @@ const Details: React.FC = () => {
     }
 
     const { id, type, breeds, description, name, photos } = petInfo;
+    const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
     return (
         <>
             {loading ? <Spinner /> : (
                 <div className={styles.details}>
                     {isLoggin
-                        ? <FavoriteBtn id={id} name={name} isFavorite={true} />
+                        ? <FavoriteBtn id={id} name={name} isFavorite={idsFavorites.includes(id)} />
                         : null}
                     {photos && <Carousel images={photos} />}
                     <div>

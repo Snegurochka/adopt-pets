@@ -14,7 +14,7 @@ interface IProps {
 const Results: React.FC<IProps> = () => {
     const { animals, favorites } = useSelector((s: AppStateType) => s);
 
-    const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals])
+    const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
 
     return (
         <div className={styles.wrapp}>
