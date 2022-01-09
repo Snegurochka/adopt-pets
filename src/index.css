@@ -53,3 +53,15 @@ body {
   margin-right: 15px;
 }
 
+.btn {
+  padding: 10px 24px;
+  height: 36px;
+  transition: all 0.3s ease;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  color: var(--white);
+  background-color: var(--primary);
+  text-decoration: none;
+}

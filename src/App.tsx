@@ -1,14 +1,17 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
-// components
-import Header from './components/Header/Header';
-import Home from './components/Home/Home';
-import Details from './components/Details/Details';
-import Footer from './components/Footer/Footer';
 import { useEffect } from "react";
 import API from "./API";
 import setAccessToken from "./store/AC/accessToken";
+
+// Pages
+import Home from './pages/Home/Home';
+import Details from './pages/Details/Details';
+
+// components
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
