@@ -5,7 +5,6 @@ import API from "../../API";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
-import setAccessToken from '../../store/AC/accessToken';
 import setAnimals from '../../store/AC/animals';
 import { changeAnimal, setAnimalTypes } from '../../store/AC/animal';
 import changeLocation from '../../store/AC/location';
@@ -22,14 +21,6 @@ const SearchParams: React.FC = () => {
   const [breeds] = useBreedList(animal.currentAnimal);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function getAccessToken() {
-      const newToken = (await API.oauthToken());
-      dispatch(setAccessToken(newToken));
-    }
-    getAccessToken();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (accessToken.access_token.length) {
