@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
 
 // styles
-import styles from "./Results.module.css";
+//import styles from "./Results.module.css";
 
 // components
 import Pet from "../Pet/Pet";
+import Card from "../UI/Card/Card";
 
 interface IProps {
 }
@@ -17,7 +18,7 @@ const Results: React.FC<IProps> = () => {
     const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
 
     return (
-        <div className={styles.wrapp}>
+        <Card>
             {!animals.animals.length ? (<h2>No Pets</h2>) : (
                 animals.animals.map((pet, ind) => (
                     <Pet
@@ -31,7 +32,7 @@ const Results: React.FC<IProps> = () => {
                     />
                 ))
             )}
-        </div>
+        </Card>
     );
 };
 
