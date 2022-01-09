@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import useBreedList from "../../hooks/useBreedList";
 import API from "../../API";
 
@@ -16,11 +17,16 @@ import styles from "./SearchParams.module.css";
 import Results from "../Results/Results";
 import Button from "../UI/Button/Button";
 
+
 const SearchParams: React.FC = () => {
   const { animal, breed, location, accessToken } = useSelector((s: AppStateType) => s);
   const [breeds] = useBreedList(animal.currentAnimal);
-
+  const history = useHistory();
+  const locationParams = useLocation();
   const dispatch = useDispatch();
+
+  const queryParams = new URLSearchParams(locationParams.search);
+  const animalQuery = queryParams.get('animal');
 
   useEffect(() => {
     if (accessToken.access_token.length) {
@@ -28,10 +34,14 @@ const SearchParams: React.FC = () => {
     }
     async function requestAnimalTypes() {
       const res = await API.fetchAnimalTypes(accessToken.access_token);
-  
+
       dispatch(setAnimalTypes(res.types));
     }
   }, [accessToken.access_token]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (animalQuery && (animal.currentAnimal !== animalQuery)) {
+    dispatch(changeAnimal(animalQuery as string));
+  }
 
   useEffect(() => {
     if (accessToken.access_token.length) {
@@ -44,21 +54,25 @@ const SearchParams: React.FC = () => {
     if (animal.currentAnimal.length) {
       query = `?type=${animal.currentAnimal.charAt(0).toLowerCase() + animal.currentAnimal.slice(1)}`;
       if (breed) {
-        query +=`&breed=${breed}`;
+        query += `&breed=${breed}`;
       }
     }
     const animals = await API.fetchAnimals(query, 1, accessToken.access_token);
     dispatch(setAnimals(animals));
   }
 
+  const animalChangeHandler = (value: string) => {
+    if (animalQuery !== value) {
+      history.push(`/?animal=${value}`);
+    }
+
+    dispatch(changeBreed(''));
+    dispatch(changeAnimal(value as string));
+  }
+
   const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     requestPets();
-  }
-
-  const animalChangeHandler = (value: string) => {
-    dispatch(changeBreed(''));
-    dispatch(changeAnimal(value as string))
   }
 
   return (

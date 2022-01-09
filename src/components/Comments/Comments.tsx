@@ -7,7 +7,9 @@ const Comments: React.FC = () => {
     return (
         <div>
             Comments
-            <Link to={`/details/${petId}/comments/add`}>Add</Link>
+            <Route path={`/details/${petId}`} exact>
+                <Link to={`/details/${petId}/comments/add`}>Add</Link>
+            </Route>
             <Route path={`/details/${petId}/comments/add`}>
                 <NewCommentForm petId={petId} />
             </Route>
