@@ -1,0 +1,16 @@
+.wrapper {
+    position: relative;
+    width   : 54px;
+}
+
+.count {
+    position     : absolute;
+    background   : var(--primary-hover);
+    color        : var(--white);
+    border-radius: 50%;
+    top          : 0;
+    right        : 0;
+    width        : 25px;
+    height       : 25px;
+    text-align   : center;
+}

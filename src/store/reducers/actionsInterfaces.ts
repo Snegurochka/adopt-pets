@@ -1,9 +1,14 @@
 import { AnimalTypesResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
-import { CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED, SET_ANIMALS, SET_TOKEN, SET_ANIMAL, SET_AUTH } from "./actionsTypes";
+import { IFavoriteAnimal } from "../../interfaces/interfaces";
+import {
+    CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED,
+    SET_ANIMALS, SET_TOKEN, SET_ANIMAL, SET_AUTH,
+    ADD_FAV_ANIMAL, ADD_FAV_ANIMALS, DEL_FAV_ANIMAL
+} from "./actionsTypes";
 
 export interface IAccessTokenAction {
     type: typeof SET_TOKEN
-    payload: oauthTokenAPIResponse  
+    payload: oauthTokenAPIResponse
 }
 
 export interface AuthAction {
@@ -12,7 +17,7 @@ export interface AuthAction {
 
 export interface IAnimalsAction {
     type: typeof SET_ANIMALS
-    payload: PetAPIResponse  
+    payload: PetAPIResponse
 }
 
 export interface ILocationAction {
@@ -25,19 +30,35 @@ export interface IThemeAction {
     payload: string
 }
 
+export interface IBreedAction {
+    type: typeof CHANGE_BREED
+    payload: string
+}
+
 interface IAnimalSetAction {
     type: typeof SET_ANIMAL
     payload: AnimalTypesResponse[]
 }
 
 interface IAnimalChangeAction {
-    type: typeof CHANGE_ANIMAL 
-    payload: string  
+    type: typeof CHANGE_ANIMAL
+    payload: string
 }
 
-export interface IBreedAction {
-    type: typeof CHANGE_BREED
-    payload: string   
+interface IFavoritesAddAction {
+    type: typeof ADD_FAV_ANIMAL
+    payload: IFavoriteAnimal
+}
+
+interface IFavoritesDelAction {
+    type: typeof DEL_FAV_ANIMAL
+    payload: number
+}
+
+interface IFavoritesSetAction {
+    type: typeof ADD_FAV_ANIMALS
+    payload: IFavoriteAnimal[]
 }
 
 export type IAnimalAction = IAnimalSetAction | IAnimalChangeAction;
+export type IFavoritesAction = IFavoritesAddAction | IFavoritesSetAction | IFavoritesDelAction;

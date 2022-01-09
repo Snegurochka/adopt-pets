@@ -1,11 +1,11 @@
 .pet {
-    height       : 130px;
-    display      : grid;
+    height               : 130px;
+    display              : grid;
     grid-template-columns: 120px 1fr;
-    gap: 10px;
-    margin       : 25px 0;
-    border-bottom: var(--darkGrey) 2px solid;
-    text-decoration: none;
+    gap                  : 10px;
+    margin               : 25px 0;
+    border-bottom        : var(--darkGrey) 2px solid;
+    text-decoration      : none;
 }
 
 .pet img {
@@ -16,6 +16,7 @@
 .info {
     height         : 100px;
     padding-top    : 10px;
+    position       : relative;
     flex-direction : column;
     justify-content: space-around;
 }
@@ -28,9 +29,9 @@
 
 
 .pet h3 {
-    font-weight  : normal;
-    font-size    : 30px;
-    margin       : 0;
+    font-weight    : normal;
+    font-size      : 30px;
+    margin         : 0;
     text-decoration: none;
 }
 
@@ -39,6 +40,6 @@
 }
 
 .pet p {
-    font-size    : 20px;
-    margin       : 0;
+    font-size: 20px;
+    margin   : 0;
 }

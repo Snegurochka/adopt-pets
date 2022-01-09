@@ -19,3 +19,8 @@ export interface IAnimal {
     description: string,
     photos: IPhotoAnimal[],
 }
+
+export interface IFavoriteAnimal {
+    id: number,
+    name: string,
+}

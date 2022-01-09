@@ -1,0 +1,19 @@
+.favorite_icon {
+    position  : absolute;
+    transition: all 0.3s ease;
+    cursor    : pointer;
+}
+
+.list {
+    top : -6px;
+    left: -40px;
+}
+
+.detail {
+    right: 30px;
+    top: 20px;
+}
+
+.favorite_icon:hover {
+    transform: scale(1.2);
+}

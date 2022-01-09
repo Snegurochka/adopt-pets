@@ -5,6 +5,7 @@ import location from "./location";
 import theme from "./theme";
 import animal from "./animal";
 import animals from "./animals";
+import favorites from "./favorites";
 import breed from "./breed";
 
 const reducer = combineReducers({
@@ -14,6 +15,7 @@ const reducer = combineReducers({
     theme,
     animal,
     animals,
+    favorites,
     breed,
 });
 
