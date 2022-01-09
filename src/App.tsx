@@ -6,12 +6,8 @@ import setAccessToken from "./store/AC/accessToken";
 
 // Pages
 import Home from './pages/Home/Home';
+import AuthPage from './pages/AuthPage/AuthPage';
 import Details from './pages/Details/Details';
-
-// components
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -26,12 +22,11 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <Header />
       <Switch>
         <Route path='/' exact component={Home} />
+        <Route path='/auth' component={AuthPage} />
         <Route path="/details/:petId" component={Details} />
       </Switch>
-      <Footer />
     </BrowserRouter>
   );
 }

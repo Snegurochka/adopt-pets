@@ -17,6 +17,7 @@ import Modal from "../../components/Modal/Modal";
 import Spinner from "../../components/Spinner/Spinner";
 import Button from "../../components/UI/Button/Button";
 import FavoriteBtn from "../../components/FavoriteBtn/FavoriteBtn";
+import Layout from "../../components/Layout/Layout";
 
 
 const Details: React.FC = () => {
@@ -44,9 +45,9 @@ const Details: React.FC = () => {
     const { id, type, breeds, description, name, photos } = petInfo;
     const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
     return (
-        <div className={styles.details}>
+        <Layout typeContent="page" >
             {loading ? <Spinner /> : (
-                    <>
+                <>
                     {isLoggin
                         ? <FavoriteBtn id={id} name={name} isFavorite={idsFavorites.includes(id)} />
                         : null}
@@ -78,9 +79,9 @@ const Details: React.FC = () => {
                     {isLoggin
                         ? (<Comments />)
                         : null}
-               </>
+                </>
             )}
- </div>
+        </Layout>
     );
 };
 
