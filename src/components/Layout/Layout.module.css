@@ -1,42 +1,33 @@
-.details {
+.wrapper {
     max-width    : var(--maxWidth);
-    margin       : 0 auto;
+    min-height   : 600px;
+    margin       : 0 auto 26px;
     padding      : 15px;
-    margin-bottom: 25px;
     border-radius: 6px;
     background   : var(--white);
     box-shadow   : 0px 0px 12px #aaa, -0px -0px 12px #fff;
-    position: relative;
+    position     : relative;
 }
 
-.details p {
-    line-height: 1.5;
-    padding    : 0px 15px;
-}
-
-.details h1 {
+.wrapper h1 {
     text-align: center;
     color     : var(--darkGrey);
     font-size : 60px;
     margin    : 5px 0px;
 }
 
-.details h2 {
+.wrapper h2 {
     text-align: center;
     margin    : 5px 0px 20px 0px;
 }
 
-.addopt_wrapp {
-    text-align: center;
-    margin: 24px auto;
+.wrapper p {
+    line-height: 1.5;
+    padding    : 0px 15px;
 }
 
 @media only screen and (max-width: 1129px) {
-    .details {
+    .wrapper {
         width        : 95%;
-        margin       : 0 auto;
-        padding      : 15px;
-        border-radius: 9px;
-        margin-bottom: 25px;
     }
 }

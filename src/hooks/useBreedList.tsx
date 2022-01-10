@@ -29,14 +29,16 @@ export default function useBreedList(animal: string): [string[], Status] {
       setBreedList([]);
       setStatus("loading");
 
-      const res = await API.fetchBreedList(animal, accessToken.access_token) as BreedListAPIResponse;
-      const breedList: string[] = [];
-      res.breeds.forEach((breed) => {
-        breedList.push(breed.name);
-      })
+      if (accessToken.access_token) {
+        const res = await API.fetchBreedList(animal, accessToken.access_token) as BreedListAPIResponse;
+        const breedList: string[] = [];
+        res.breeds.forEach((breed) => {
+          breedList.push(breed.name);
+        })
 
-      localCache[animal] = breedList;
-      setBreedList(localCache[animal]);
+        localCache[animal] = breedList;
+        setBreedList(localCache[animal]);
+      }
       setStatus("loaded");
     }
   }, [animal, accessToken.access_token]);

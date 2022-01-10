@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../store/reducers";
+import API from "../../API";
 
 //import ThemeContext from "../../context/ThemeContext";
 import styles from "./Details.module.css";
@@ -7,15 +10,14 @@ import styles from "./Details.module.css";
 import { IAnimal } from "../../interfaces/interfaces";
 
 // components
-import Carousel from "../Carousel/Carousel";
-import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
-import Modal from "../Modal/Modal";
-import Spinner from "../Spinner/Spinner";
-import Button from "../UI/Button/Button";
-import { useSelector } from "react-redux";
-import { AppStateType } from "../../store/reducers";
-import API from "../../API";
-import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
+import Carousel from "../../components/Carousel/Carousel";
+import Comments from "../../components/Comments/Comments";
+import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
+import Modal from "../../components/Modal/Modal";
+import Spinner from "../../components/Spinner/Spinner";
+import Button from "../../components/UI/Button/Button";
+import FavoriteBtn from "../../components/FavoriteBtn/FavoriteBtn";
+import Layout from "../../components/Layout/Layout";
 
 
 const Details: React.FC = () => {
@@ -33,7 +35,7 @@ const Details: React.FC = () => {
             setPetInfo(res.animal);
         }
         requestDetails();
-    }, [petId]);// eslint-disable-line react-hooks/exhaustive-deps
+    }, [petId, accessToken.access_token]);// eslint-disable-line react-hooks/exhaustive-deps
 
     const adopt = () => {
         console.log('ok adopted');
@@ -43,9 +45,9 @@ const Details: React.FC = () => {
     const { id, type, breeds, description, name, photos } = petInfo;
     const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
     return (
-        <>
+        <Layout typeContent="page" >
             {loading ? <Spinner /> : (
-                <div className={styles.details}>
+                <>
                     {isLoggin
                         ? <FavoriteBtn id={id} name={name} isFavorite={idsFavorites.includes(id)} />
                         : null}
@@ -74,10 +76,12 @@ const Details: React.FC = () => {
                                 </Modal>) : null
                         }
                     </div>
-                </div>
+                    {isLoggin
+                        ? (<Comments />)
+                        : null}
+                </>
             )}
-
-        </>
+        </Layout>
     );
 };
 
