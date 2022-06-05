@@ -1,8 +1,3 @@
-.wrapper {
-    margin   : 24px auto 140px;
-    max-width: 400px;
-}
-
 .wrapper_form {
     display              : grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -16,10 +11,4 @@
     margin-top   : .25rem;
     border-radius: 0.5rem;
     border       : 1px solid var(--lightGrey);
-}
-
-@media screen and (max-width: 680px) {
-    .wrapper {
-        max-width: 20rem;
-    }
 }

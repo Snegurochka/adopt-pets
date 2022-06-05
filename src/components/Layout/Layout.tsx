@@ -15,7 +15,7 @@ const Layout: React.FC<PropsType> = ({ header, classPage, typeContent, children 
         <Header />
         <main className={classPage} >
             <section className={typeContent ? styles.wrapper : ''}>
-                {typeContent
+                {typeContent && header
                     ? <h1>{header}</h1>
                     : null}
                 {children}

@@ -9,13 +9,13 @@ import {
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDCeTOng93eTIUxUiW_xDPkvHMT_2pTKl8",
-    authDomain: "adopt-me-48d2e.firebaseapp.com",
-    databaseURL: "https://adopt-me-48d2e-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "adopt-me-48d2e",
-    storageBucket: "adopt-me-48d2e.appspot.com",
-    messagingSenderId: "205529629849",
-    appId: "1:205529629849:web:3c070f9449c3a323ed6408"
+    apiKey: "AIzaSyBYNcIfrAZJyxDtTX_Nwj9AdTlH3IKziI4",
+    authDomain: "adopt-me-2-f799d.firebaseapp.com",
+    projectId: "adopt-me-2-f799d",
+    storageBucket: "adopt-me-2-f799d.appspot.com",
+    messagingSenderId: "1033358948597",
+    appId: "1:1033358948597:web:3bd8f682c9029191272dbc",
+    measurementId: "G-VW8S1QPH5M"
 };
 
 
