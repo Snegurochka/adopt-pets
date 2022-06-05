@@ -13,6 +13,7 @@ You can see in live: https://adopt-this-pet.netlify.app/
 - React, React Hooks, Custom Hooks, Redux
 - TypeScript, JS,
 - REST API - Petfinder.com
+- Auth: Firebase
 - CSS Modules for layout,
 - Jest (Unit tests, Snapshot tests)
 

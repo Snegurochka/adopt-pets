@@ -23,29 +23,31 @@ const AuthForm: React.FC = () => {
 
     return (
         <section className={styles.wrapper}>
-        <Card>
-            <h1>Login</h1>
-            <form  action="#" method="post" className={styles.wrapper_form}>
-            <label><span>Email address</span>
-                    <input
-                        type='text'
-                        value={username}
-                        name='username'
-                        placeholder="example@example.com"
-                        onChange={(evt) => { setUsername(evt.currentTarget.value) }}
-                    />
-                </label>
-                <label><span>Password</span>
-                    <input
-                        type='password'
-                        value={password}
-                        name='password'
-                        onChange={(evt) => { setPassword(evt.currentTarget.value) }}
-                    />
-                </label>
-            <Button appearance='primary' callback={submitHandler}>Login</Button>
-            </form>
-        </Card>
+            <Card>
+                <h1>Login</h1>
+                <form action="#" method="post" className={styles.wrapper_form}>
+                    <label>
+                        <span>Email address</span>
+                        <input
+                            type='text'
+                            value={username}
+                            name='username'
+                            placeholder="example@example.com"
+                            onChange={(evt) => { setUsername(evt.currentTarget.value) }}
+                        />
+                    </label>
+                    <label>
+                        <span>Password</span>
+                        <input
+                            type='password'
+                            value={password}
+                            name='password'
+                            onChange={(evt) => { setPassword(evt.currentTarget.value) }}
+                        />
+                    </label>
+                    <Button appearance='primary' callback={submitHandler}>Login</Button>
+                </form>
+            </Card>
         </section>
     )
 }
