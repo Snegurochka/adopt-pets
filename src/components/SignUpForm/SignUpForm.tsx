@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase.utils';
 import Button from '../UI/Button/Button';
+import FormInput from '../UI/FormInput/FormInput';
 
 const signUpFields = {
     displayName: '',
@@ -40,34 +41,10 @@ const SignUpForm: React.FC = () => {
         <section>
             <h2>SignUpForm</h2>
             <form onSubmit={submitHandler}>
-                <label>
-                    <span>Display name</span>
-                    <input
-                        type='text'
-                        value={displayName}
-                        name='displayName'
-                        onChange={changeHandler}
-                    />
-                </label>
-                <label>
-                    <span>Email address</span>
-                    <input
-                        type='text'
-                        value={email}
-                        name='email'
-                        placeholder="example@example.com"
-                        onChange={changeHandler}
-                    />
-                </label>
-                <label>
-                    <span>Password</span>
-                    <input
-                        type='password'
-                        value={password}
-                        name='password'
-                        onChange={changeHandler}
-                    />
-                </label>
+                <FormInput label="Display name" name="displayName" value={displayName} onChange={changeHandler} />
+                <FormInput label="Email address" name="email" value={email} onChange={changeHandler} placeholder="example@example.com" />
+                <FormInput label="Password" name="password" value={password} onChange={changeHandler} />
+
                 <Button>Sign Up</Button>
             </form>
         </section>
