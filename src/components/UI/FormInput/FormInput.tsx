@@ -1,18 +1,22 @@
 import React, { InputHTMLAttributes } from 'react'
 
-type FormInputProps = { label: string } & InputHTMLAttributes<HTMLInputElement>;
+type FormInputProps = { label: string } & InputHTMLAttributes<HTMLInputElement> & { value: string };
 
 const FormInput: React.FC<FormInputProps> = ({ label, name, value, ...otherParams }) => {
     return (
-        <label>
-            <span>{label}</span>
+        <div className='group'>
+            {label && (
+                <label className={`${value && value.length ? 'shrink' : ''} `}>
+                    {label}
+                </label>
+            )}
             <input
                 type='text'
                 value={value}
                 name={name}
                 {...otherParams}
             />
-        </label>
+        </div>
     )
 }
 
