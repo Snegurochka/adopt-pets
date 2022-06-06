@@ -1,5 +1,6 @@
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_AUTH = 'SET_AUTH';
+export const SET_USER = 'SET_USER';
 export const SET_ANIMALS = 'SET_ANIMALS';
 export const ADD_FAV_ANIMAL = 'ADD_FAV_ANIMAL';
 export const DEL_FAV_ANIMAL = 'DEL_FAV_ANIMAL';

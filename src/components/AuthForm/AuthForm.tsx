@@ -8,6 +8,7 @@ import styles from './AuthForm.module.css';
 import Button from "../UI/Button/Button";
 import { createUserDocumentFromAuth, signInWithGooglePopup } from '../../utils/firebase.utils';
 import FormInput from '../UI/FormInput/FormInput';
+import setUser from '../../store/AC/user';
 
 const defaultFields = {
     email: '',
@@ -36,6 +37,8 @@ const AuthForm: React.FC = () => {
     const logGoogleUser = async () => {
         const { user } = await signInWithGooglePopup();
         await createUserDocumentFromAuth(user);
+        dispatch(setAuth());
+        dispatch(setUser(user));
     };
 
     return (
