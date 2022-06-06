@@ -4,7 +4,6 @@ import styles from './AuthPage.module.css';
 // components
 import AuthForm from '../../components/AuthForm/AuthForm';
 import Layout from "../../components/Layout/Layout";
-import Card from "../../components/UI/Card/Card";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
 
 const AuthPage: React.FC = () => {

@@ -24,3 +24,9 @@ export interface IFavoriteAnimal {
     id: number,
     name: string,
 }
+
+export interface IUser {
+    displayName: string,
+    email: string,
+    password: string,
+}

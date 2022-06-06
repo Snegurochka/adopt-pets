@@ -1,3 +1,4 @@
+import { User } from "firebase/auth";
 import { IAnimal } from "./interfaces";
 
 export interface oauthTokenAPIResponse {
@@ -40,4 +41,8 @@ export interface AnimalDetailsAPIResponse {
 
 export interface FavoritesAPIResponse {
   error: boolean;
+}
+
+export interface firebaseAuthResponse {
+  user: User
 }
