@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes } from 'react'
+import React, { InputHTMLAttributes } from 'react';
+import './FormInput.module.scss';
 
 type FormInputProps = { label: string } & InputHTMLAttributes<HTMLInputElement> & { value: string };
 
