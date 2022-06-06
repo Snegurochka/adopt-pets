@@ -39,11 +39,12 @@ const SignUpForm: React.FC = () => {
 
     return (
         <section>
-            <h2>SignUpForm</h2>
+            <h2>Don't have an account?</h2>
+            <span>Sign up with your email and password</span>
             <form onSubmit={submitHandler}>
                 <FormInput label="Display name" name="displayName" value={displayName} onChange={changeHandler} />
-                <FormInput label="Email address" name="email" value={email} onChange={changeHandler} placeholder="example@example.com" />
-                <FormInput label="Password" name="password" value={password} onChange={changeHandler} />
+                <FormInput label="Email address" name="email" value={email} onChange={changeHandler} />
+                <FormInput label="Password" name="password" value={password} type='password' onChange={changeHandler} />
 
                 <Button>Sign Up</Button>
             </form>
