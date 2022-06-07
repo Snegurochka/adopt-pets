@@ -8,6 +8,8 @@ import {
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
     User,
+    onAuthStateChanged,
+    NextOrObserver,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { firebaseAuthResponse } from '../interfaces/APIinterfases';
@@ -78,3 +80,5 @@ export const signInUserWithEmailAndPassword = async (email: string, password: st
 
     return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);
