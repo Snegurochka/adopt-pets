@@ -6,7 +6,7 @@ import setAuth from '../../store/AC/auth';
 import styles from './AuthForm.module.css';
 
 import Button from "../UI/Button/Button";
-import { createUserDocumentFromAuth, signInWithGooglePopup } from '../../utils/firebase.utils';
+import { createUserDocumentFromAuth, signInUserWithEmailAndPassword, signInWithGooglePopup } from '../../utils/firebase.utils';
 import FormInput from '../UI/FormInput/FormInput';
 import setUser from '../../store/AC/user';
 
@@ -28,8 +28,9 @@ const AuthForm: React.FC = () => {
         setFields({ ...fields, [name]: value });
     };
 
-    const submitHandler = (evt: React.FormEvent) => {
+    const submitHandler = async (evt: React.FormEvent) => {
         evt.preventDefault();
+        await signInUserWithEmailAndPassword(email, password);
         dispatch(setAuth());
         history.replace(`/`);
     }
@@ -39,6 +40,7 @@ const AuthForm: React.FC = () => {
         await createUserDocumentFromAuth(user);
         dispatch(setAuth());
         dispatch(setUser(user));
+        history.replace(`/`);
     };
 
     return (

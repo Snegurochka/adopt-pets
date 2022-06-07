@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import accessToken from "./accessToken";
 import auth from "./auth";
+import user from "./user";
 import location from "./location";
 import theme from "./theme";
 import animal from "./animal";
@@ -17,6 +18,7 @@ const reducer = combineReducers({
     animals,
     favorites,
     breed,
+    user,
 });
 
 type RootReducerType = typeof reducer;

@@ -13,6 +13,9 @@ import FavoriteTop from "../FavoriteTop/FavoriteTop";
 
 const UserBlock: React.FC = () => {
     const { isLoggin } = useSelector((s: AppStateType) => s.auth);
+    const { user } = useSelector((s: AppStateType) => s.user);
+    console.log(user);
+    
 
     return (
         <div className={styles.wrapper}>
