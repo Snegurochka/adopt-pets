@@ -1,9 +1,10 @@
+import { User } from "firebase/auth";
 import { AnimalTypesResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
 import { IFavoriteAnimal } from "../../interfaces/interfaces";
 import {
     CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED,
     SET_ANIMALS, SET_TOKEN, SET_ANIMAL, SET_AUTH,
-    ADD_FAV_ANIMAL, ADD_FAV_ANIMALS, DEL_FAV_ANIMAL
+    ADD_FAV_ANIMAL, ADD_FAV_ANIMALS, DEL_FAV_ANIMAL, SET_USER
 } from "./actionsTypes";
 
 export interface IAccessTokenAction {
@@ -13,6 +14,11 @@ export interface IAccessTokenAction {
 
 export interface AuthAction {
     type: typeof SET_AUTH
+}
+
+export interface IUserAction {
+    type: typeof SET_USER
+    payload: User | null
 }
 
 export interface IAnimalsAction {
