@@ -14,7 +14,6 @@ import setUser from "../../store/AC/user";
 
 
 const UserBlock: React.FC = () => {
-    const { isLoggin } = useSelector((s: AppStateType) => s.auth);
     const { user } = useSelector((s: AppStateType) => s.user);
 
     const dispatch = useDispatch();

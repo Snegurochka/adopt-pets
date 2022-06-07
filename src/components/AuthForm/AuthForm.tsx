@@ -30,15 +30,19 @@ const AuthForm: React.FC = () => {
 
     const submitHandler = async (evt: React.FormEvent) => {
         evt.preventDefault();
-        await signInUserWithEmailAndPassword(email, password);
-        dispatch(setAuth());
-        history.replace(`/`);
+        try {
+            const { user } = await signInUserWithEmailAndPassword(email, password);
+            dispatch(setUser(user));
+            history.replace(`/`);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const logGoogleUser = async () => {
         const { user } = await signInWithGooglePopup();
         await createUserDocumentFromAuth(user);
-        dispatch(setAuth());
+
         dispatch(setUser(user));
         history.replace(`/`);
     };
