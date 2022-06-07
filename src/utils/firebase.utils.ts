@@ -32,10 +32,9 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () =>
-    signInWithPopup(auth, googleProvider);
-export const signInWithGoogleRedirect = () =>
-    signInWithRedirect(auth, googleProvider);
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
+export const signOutUser = async () => await signOut(auth);
 
 export const db = getFirestore();
 
@@ -68,19 +67,13 @@ export const createUserDocumentFromAuth = async (
     return userDocRef;
 };
 
-export type UserData = {
-    createdAt: Date;
-    displayName: string;
-    email: string;
-  };
-
-export const createAuthUserWithEmailAndPassword = async (email: string, password:string) : Promise<firebaseAuthResponse>=> {
+export const createAuthUserWithEmailAndPassword = async (email: string, password: string): Promise<firebaseAuthResponse> => {
     //if (!email || !password) return;
 
     return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const signInUserWithEmailAndPassword = async (email: string, password:string) : Promise<firebaseAuthResponse>=> {
+export const signInUserWithEmailAndPassword = async (email: string, password: string): Promise<firebaseAuthResponse> => {
     //if (!email || !password) return;
 
     return await signInWithEmailAndPassword(auth, email, password);

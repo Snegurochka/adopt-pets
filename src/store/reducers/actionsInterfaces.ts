@@ -18,7 +18,7 @@ export interface AuthAction {
 
 export interface IUserAction {
     type: typeof SET_USER
-    payload: User
+    payload: User | null
 }
 
 export interface IAnimalsAction {
