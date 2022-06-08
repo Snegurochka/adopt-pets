@@ -1,4 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import setUser from '../../store/AC/user';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase.utils';
 import Button from '../UI/Button/Button';
 import FormInput from '../UI/FormInput/FormInput';
@@ -12,7 +15,10 @@ const signUpFields = {
 
 const SignUpForm: React.FC = () => {
     const [fields, setFields] = useState(signUpFields);
-    const { displayName, email, password, confirmPassword } = fields;
+    const { displayName, email, password } = fields;
+
+    const history = useHistory();
+    const dispatch = useDispatch();
 
     const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -32,6 +38,8 @@ const SignUpForm: React.FC = () => {
 
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
+            dispatch(setUser(user));
+            history.replace(`/account`);
         } catch (error) {
             console.log(error);
         }

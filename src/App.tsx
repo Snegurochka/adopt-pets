@@ -8,6 +8,7 @@ import setAccessToken from "./store/AC/accessToken";
 import Home from './pages/Home/Home';
 import AuthPage from './pages/AuthPage/AuthPage';
 import Details from './pages/Details/Details';
+import Account from "./pages/Account/Account";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const App: React.FC = () => {
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/auth' component={AuthPage} />
+        <Route path='/account' component={Account} />
         <Route path="/details/:petId" component={Details} />
       </Switch>
     </BrowserRouter>
