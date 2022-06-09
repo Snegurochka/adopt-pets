@@ -22,7 +22,7 @@ import Layout from "../../components/Layout/Layout";
 
 const Details: React.FC = () => {
     const { accessToken, favorites } = useSelector((s: AppStateType) => s);
-    const { isLoggin } = useSelector((s: AppStateType) => s.auth);
+    const { user } = useSelector((s: AppStateType) => s.user);
     const [loading, setLoading] = useState(true);
     const [petInfo, setPetInfo] = useState({} as IAnimal);
     const [showModal, setShowModal] = useState(false);
@@ -48,7 +48,7 @@ const Details: React.FC = () => {
         <Layout typeContent="page" >
             {loading ? <Spinner /> : (
                 <>
-                    {isLoggin
+                    {user
                         ? <FavoriteBtn id={id} name={name} isFavorite={idsFavorites.includes(id)} />
                         : null}
                     {photos && <Carousel images={photos} />}
@@ -56,7 +56,7 @@ const Details: React.FC = () => {
                         <h1>{name}</h1>
                         <h2>{`${type} — ${breeds?.primary}`}</h2>
                         <div className={styles.addopt_wrapp}>
-                            {isLoggin ? (
+                            {user ? (
                                 <Button onClick={() => { setShowModal(!showModal) }}>
                                     Adopt {name}
                                 </Button>
@@ -76,7 +76,7 @@ const Details: React.FC = () => {
                                 </Modal>) : null
                         }
                     </div>
-                    {isLoggin
+                    {user
                         ? (<Comments />)
                         : null}
                 </>

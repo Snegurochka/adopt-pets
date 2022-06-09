@@ -20,7 +20,7 @@ interface IProps {
 }
 
 const Pet: React.FC<IProps> = ({ id, name, animal, breed, images, isFavorite }) => {
-  const { isLoggin } = useSelector((s: AppStateType) => s.auth)
+  const { user } = useSelector((s: AppStateType) => s.user);
   return (
     <div className={styles.pet}>
       <div className={styles.image}>
@@ -32,7 +32,7 @@ const Pet: React.FC<IProps> = ({ id, name, animal, breed, images, isFavorite }) 
         </Link>
       </div>
       <div className={styles.info}>
-        {isLoggin
+        {user
           ? <FavoriteBtn id={id} name={name} isFavorite={isFavorite} btnClass="list"/>
           : null}
         <Link to={`/details/${id}`}>
