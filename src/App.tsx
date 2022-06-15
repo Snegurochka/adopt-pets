@@ -9,17 +9,31 @@ import Home from './pages/Home/Home';
 import AuthPage from './pages/AuthPage/AuthPage';
 import Details from './pages/Details/Details';
 import Account from "./pages/Account/Account";
+import { createUserDocumentFromAuth, onAuthStateChangedListener } from "./utils/firebase.utils";
+import setUser from "./store/AC/user";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Auth PetFinder API to get animals
     async function getAccessToken() {
       const newToken = (await API.oauthToken());
       dispatch(setAccessToken(newToken));
     }
     getAccessToken();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Auth account
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      if (user) {
+        createUserDocumentFromAuth(user);
+      }
+
+      dispatch(setUser(user));
+    });
+
+    return unsubscribe;
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
