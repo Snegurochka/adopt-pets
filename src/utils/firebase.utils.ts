@@ -11,7 +11,7 @@ import {
     onAuthStateChanged,
     NextOrObserver,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, query, getDocs } from 'firebase/firestore';
 import { firebaseAuthResponse } from '../interfaces/APIinterfases';
 
 const firebaseConfig = {
@@ -25,7 +25,7 @@ const firebaseConfig = {
 };
 
 
-const firebaseApp = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -33,12 +33,14 @@ googleProvider.setCustomParameters({
     prompt: 'select_account',
 });
 
+export const db = getFirestore();
+
+// Auth section
+
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 export const signOutUser = async () => await signOut(auth);
-
-export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async (
     userAuth: User,
@@ -82,3 +84,17 @@ export const signInUserWithEmailAndPassword = async (email: string, password: st
 };
 
 export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);
+
+export const getCollectionAndDocuments = async (collectionName: string, params='') => {
+    const collectionRef = collection(db, collectionName);
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    return querySnapshot;
+};
+
+// Comments
+export const getCommentsByPetFromAPI = async (petId: string) => {
+    const querySnapshot = await getCollectionAndDocuments('comments');
+    return querySnapshot.docs.map((doc) => doc.data());
+};
