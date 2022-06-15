@@ -10,3 +10,5 @@ export const CHANGE_THEME = 'CHANGE_THEME';
 export const CHANGE_ANIMAL = 'CHANGE_ANIMAL';
 export const SET_ANIMAL = 'SET_ANIMAL';
 export const CHANGE_BREED = 'CHANGE_BREED';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const SET_COMMENTS = 'SET_COMMENTS';

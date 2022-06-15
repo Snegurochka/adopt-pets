@@ -1,10 +1,11 @@
 import { User } from "firebase/auth";
-import { AnimalTypesResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
-import { IFavoriteAnimal } from "../../interfaces/interfaces";
+import { AnimalTypesResponse, CommentsAPIResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
+import { IComment, IFavoriteAnimal } from "../../interfaces/interfaces";
 import {
     CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED,
     SET_ANIMALS, SET_TOKEN, SET_ANIMAL, SET_AUTH,
-    ADD_FAV_ANIMAL, ADD_FAV_ANIMALS, DEL_FAV_ANIMAL, SET_USER
+    ADD_FAV_ANIMAL, ADD_FAV_ANIMALS, DEL_FAV_ANIMAL, 
+    SET_USER, ADD_COMMENT, SET_COMMENTS
 } from "./actionsTypes";
 
 export interface IAccessTokenAction {
@@ -68,3 +69,15 @@ interface IFavoritesSetAction {
 
 export type IAnimalAction = IAnimalSetAction | IAnimalChangeAction;
 export type IFavoritesAction = IFavoritesAddAction | IFavoritesSetAction | IFavoritesDelAction;
+
+interface ICommentAddAction {
+    type: typeof ADD_COMMENT
+    payload: IComment
+}
+
+interface ICommentsSetAction {
+    type: typeof SET_COMMENTS
+    payload: IComment[]
+}
+
+export type ICommentsAction = ICommentAddAction | ICommentsSetAction;
