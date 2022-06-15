@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import { AppStateType } from "../../store/reducers";
+import { useDispatch, useSelector } from "react-redux";
 import API from "../../API";
+import { getCommentsByPetFromAPI } from "../../utils/firebase.utils";
+import setComments from "../../store/AC/comments";
+import { AppStateType } from "../../store/reducers";
 
-//import ThemeContext from "../../context/ThemeContext";
 import styles from "./Details.module.css";
 
-import { IAnimal } from "../../interfaces/interfaces";
+import { IAnimal, IComment } from "../../interfaces/interfaces";
 
 // components
 import Carousel from "../../components/Carousel/Carousel";
@@ -18,7 +19,6 @@ import Spinner from "../../components/Spinner/Spinner";
 import Button from "../../components/UI/Button/Button";
 import FavoriteBtn from "../../components/FavoriteBtn/FavoriteBtn";
 import Layout from "../../components/Layout/Layout";
-
 
 const Details: React.FC = () => {
     const { accessToken, favorites } = useSelector((s: AppStateType) => s);
@@ -36,6 +36,16 @@ const Details: React.FC = () => {
         }
         requestDetails();
     }, [petId, accessToken.access_token]);// eslint-disable-line react-hooks/exhaustive-deps
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            const comments = await getCommentsByPetFromAPI(petId) as IComment[];
+            dispatch(setComments(comments));
+        }
+        fetchComments();
+    }, [petId, dispatch]);
 
     const adopt = () => {
         console.log('ok adopted');
@@ -77,7 +87,7 @@ const Details: React.FC = () => {
                         }
                     </div>
                     {user
-                        ? (<Comments />)
+                        ? (<Comments uid={user.uid} />)
                         : null}
                 </>
             )}
