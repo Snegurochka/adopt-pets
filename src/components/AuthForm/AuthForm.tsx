@@ -1,14 +1,19 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import setAuth from '../../store/AC/auth';
+import {
+    createUserDocumentFromAuth,
+    signInUserWithEmailAndPassword,
+    signInWithGooglePopup
+} from '../../utils/firebase.utils';
+import setUser from '../../store/AC/user';
 
 import styles from './AuthForm.module.css';
 
+// components
 import Button from "../UI/Button/Button";
-import { createUserDocumentFromAuth, signInUserWithEmailAndPassword, signInWithGooglePopup } from '../../utils/firebase.utils';
 import FormInput from '../UI/FormInput/FormInput';
-import setUser from '../../store/AC/user';
+
 
 const defaultFields = {
     email: '',
