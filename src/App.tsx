@@ -12,6 +12,7 @@ import Account from "./pages/Account/Account";
 import { createUserDocumentFromAuth, onAuthStateChangedListener } from "./utils/firebase.utils";
 import setUser from "./store/AC/user";
 import NotFound from "./pages/NotFound/NotFound";
+import FavoritesPage from "./pages/FavoritesPage/FavoritesPage";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         <Route path='/auth' component={AuthPage} />
         <Route path='/account' component={Account} />
         <Route path="/details/:petId" component={Details} />
+        <Route path='/favorite' component={FavoritesPage} />
         <Route path='/*' component={NotFound} />
       </Switch>
     </BrowserRouter>

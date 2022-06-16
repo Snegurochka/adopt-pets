@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Layout from '../../components/Layout/Layout'
 import { AppStateType } from '../../store/reducers';
 
@@ -10,12 +10,11 @@ const Account: React.FC = () => {
         <Layout typeContent="page" header="My account">
             {user
                 ? (<div>
-                    Account
+                    <Link to="/favorite">Favorites</Link>
                 </div>)
                 :
                 <Redirect to='/' />
             }
-
         </Layout>
     )
 }
