@@ -5,7 +5,7 @@
   justify-content: space-between;
 }
 
-header>a,
+/* header>a,
 #root>div>h1 {
   display: inline-block;
   margin : 20px 0;
@@ -18,7 +18,7 @@ header a {
   font-weight    : bold;
   display        : block;
   padding-bottom : 10px;
-}
+} */
 
 @media only screen and (max-width: 1129px) {
   header {
