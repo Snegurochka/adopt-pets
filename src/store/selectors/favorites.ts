@@ -8,6 +8,10 @@ export const selectFavoritesAnimals = createSelector(
     (favorites) => favorites.animals
 );
 
+export const selectFavoritesIds = createSelector([selectFavoritesAnimals], (animals) =>
+    animals.map((item) => item.id)
+);
+
 export const selectFavoritesCount = createSelector([selectFavoritesAnimals], (animals) =>
     animals.length
 );

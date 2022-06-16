@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import API from "../../API";
 import { getCommentsByPetFromAPI } from "../../utils/firebase.utils";
 import setComments from "../../store/AC/comments";
 import { AppStateType } from "../../store/reducers";
+import { selectFavoritesIds } from "../../store/selectors/favorites";
 
 import styles from "./Details.module.css";
 
@@ -20,9 +21,11 @@ import Button from "../../components/UI/Button/Button";
 import FavoriteBtn from "../../components/FavoriteBtn/FavoriteBtn";
 import Layout from "../../components/Layout/Layout";
 
+
 const Details: React.FC = () => {
-    const { accessToken, favorites } = useSelector((s: AppStateType) => s);
+    const { accessToken } = useSelector((s: AppStateType) => s);
     const { user } = useSelector((s: AppStateType) => s.user);
+    const idsFavorites = useSelector(selectFavoritesIds);
     const [loading, setLoading] = useState(true);
     const [petInfo, setPetInfo] = useState({} as IAnimal);
     const [showModal, setShowModal] = useState(false);
@@ -53,7 +56,7 @@ const Details: React.FC = () => {
     }
 
     const { id, type, breeds, description, name, photos } = petInfo;
-    const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
+    //const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
     return (
         <Layout typeContent="page" >
             {loading ? <Spinner /> : (
