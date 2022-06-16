@@ -11,6 +11,7 @@ import Details from './pages/Details/Details';
 import Account from "./pages/Account/Account";
 import { createUserDocumentFromAuth, onAuthStateChangedListener } from "./utils/firebase.utils";
 import setUser from "./store/AC/user";
+import NotFound from "./pages/NotFound/NotFound";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const App: React.FC = () => {
         <Route path='/auth' component={AuthPage} />
         <Route path='/account' component={Account} />
         <Route path="/details/:petId" component={Details} />
+        <Route path='/*' component={NotFound} />
       </Switch>
     </BrowserRouter>
   );
