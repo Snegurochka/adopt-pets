@@ -1,13 +1,18 @@
+import { createSelector } from 'reselect';
 import { CommentsAPIResponse } from "../../interfaces/APIinterfases";
 import { IComment } from "../../interfaces/interfaces";
 import { AppStateType } from "../reducers";
 
-export const selectComments = (state: AppStateType) => {
-    const { comments } = state.comments as CommentsAPIResponse;
-    const commentsMap = comments.reduce((acc, { uid, title, text }, index) => {
+const selectCommentsReducer = (state: AppStateType): CommentsAPIResponse => state.comments;
+
+export const selectCommentsSlice = createSelector(
+    [selectCommentsReducer],
+    (commentsSlice) => commentsSlice.comments
+);
+
+export const selectComments = createSelector(
+    [selectCommentsSlice],
+    (comments) => comments.reduce((acc, { uid, title, text }, index) => {
         acc[index] = { uid, title, text };
         return acc;
-    }, [] as IComment[]);
-
-    return commentsMap;
-};
+    }, [] as IComment[]));
