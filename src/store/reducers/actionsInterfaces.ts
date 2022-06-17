@@ -1,10 +1,15 @@
 import { User } from "firebase/auth";
-import { AnimalTypesResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
-import { IFavoriteAnimal } from "../../interfaces/interfaces";
+import { Action } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from ".";
+import { oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
+import { changeAnimal, setAnimalTypes } from "../AC/animal";
+import { fetchCommentsFailed, setComments, isLoadingComments } from "../AC/comments";
+import { addFavoriteAnimal, deleteFavoriteAnimal, setFavoriteAnimals } from "../AC/favorites";
 import {
-    CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED,
-    SET_ANIMALS, SET_TOKEN, SET_ANIMAL, SET_AUTH,
-    ADD_FAV_ANIMAL, ADD_FAV_ANIMALS, DEL_FAV_ANIMAL, SET_USER
+    CHANGE_LOCATION, CHANGE_THEME, CHANGE_BREED,
+    SET_ANIMALS, SET_TOKEN, SET_AUTH,
+    SET_USER
 } from "./actionsTypes";
 
 export interface IAccessTokenAction {
@@ -41,30 +46,21 @@ export interface IBreedAction {
     payload: string
 }
 
-interface IAnimalSetAction {
-    type: typeof SET_ANIMAL
-    payload: AnimalTypesResponse[]
-}
+export type IAnimalAction =
+    | ReturnType<typeof changeAnimal>
+    | ReturnType<typeof setAnimalTypes>;
 
-interface IAnimalChangeAction {
-    type: typeof CHANGE_ANIMAL
-    payload: string
-}
+export type IFavoritesAction =
+    | ReturnType<typeof addFavoriteAnimal>
+    | ReturnType<typeof deleteFavoriteAnimal>
+    | ReturnType<typeof setFavoriteAnimals>;
 
-interface IFavoritesAddAction {
-    type: typeof ADD_FAV_ANIMAL
-    payload: IFavoriteAnimal
-}
+export type ICommentsAction =
+    | ReturnType<typeof setComments>
+    | ReturnType<typeof isLoadingComments>
+    | ReturnType<typeof fetchCommentsFailed>
 
-interface IFavoritesDelAction {
-    type: typeof DEL_FAV_ANIMAL
-    payload: number
-}
 
-interface IFavoritesSetAction {
-    type: typeof ADD_FAV_ANIMALS
-    payload: IFavoriteAnimal[]
-}
+export type ThunkActionResult<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>;
 
-export type IAnimalAction = IAnimalSetAction | IAnimalChangeAction;
-export type IFavoritesAction = IFavoritesAddAction | IFavoritesSetAction | IFavoritesDelAction;
+export type ThunkActionCommentsResult = ThunkActionResult<ICommentsAction>

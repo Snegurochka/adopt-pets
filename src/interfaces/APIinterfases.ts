@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { IAnimal } from "./interfaces";
+import { IAnimal, IComment } from "./interfaces";
 
 export interface oauthTokenAPIResponse {
   token_type: "Bearer",
@@ -45,4 +45,8 @@ export interface FavoritesAPIResponse {
 
 export interface firebaseAuthResponse {
   user: User
+}
+
+export interface CommentsAPIResponse {
+  comments: IComment[],
 }

@@ -4,6 +4,10 @@
     cursor    : pointer;
 }
 
+.favorite_icon svg {
+    width: 30px;
+}
+
 .list {
     top : -6px;
     left: -40px;

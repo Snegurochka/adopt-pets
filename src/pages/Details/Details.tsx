@@ -1,13 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import { AppStateType } from "../../store/reducers";
+import { useDispatch, useSelector } from "react-redux";
 import API from "../../API";
+import { fetchComments } from "../../store/AC/comments";
+import { AppStateType } from "../../store/reducers";
+import { selectFavoritesIds } from "../../store/selectors/favorites";
 
-//import ThemeContext from "../../context/ThemeContext";
 import styles from "./Details.module.css";
 
-import { IAnimal } from "../../interfaces/interfaces";
+import { IAnimal, IComment } from "../../interfaces/interfaces";
 
 // components
 import Carousel from "../../components/Carousel/Carousel";
@@ -21,8 +22,9 @@ import Layout from "../../components/Layout/Layout";
 
 
 const Details: React.FC = () => {
-    const { accessToken, favorites } = useSelector((s: AppStateType) => s);
+    const { accessToken } = useSelector((s: AppStateType) => s);
     const { user } = useSelector((s: AppStateType) => s.user);
+    const idsFavorites = useSelector(selectFavoritesIds);
     const [loading, setLoading] = useState(true);
     const [petInfo, setPetInfo] = useState({} as IAnimal);
     const [showModal, setShowModal] = useState(false);
@@ -37,13 +39,19 @@ const Details: React.FC = () => {
         requestDetails();
     }, [petId, accessToken.access_token]);// eslint-disable-line react-hooks/exhaustive-deps
 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchComments(petId));
+    }, [petId, dispatch]);
+
     const adopt = () => {
         console.log('ok adopted');
         setShowModal(!showModal)
     }
 
     const { id, type, breeds, description, name, photos } = petInfo;
-    const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
+    //const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
     return (
         <Layout typeContent="page" >
             {loading ? <Spinner /> : (
@@ -77,7 +85,7 @@ const Details: React.FC = () => {
                         }
                     </div>
                     {user
-                        ? (<Comments />)
+                        ? (<Comments uid={user.uid} />)
                         : null}
                 </>
             )}

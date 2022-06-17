@@ -8,6 +8,7 @@ import animal from "./animal";
 import animals from "./animals";
 import favorites from "./favorites";
 import breed from "./breed";
+import comments from "./comments";
 
 const reducer = combineReducers({
     accessToken,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
     favorites,
     breed,
     user,
+    comments,
 });
 
 type RootReducerType = typeof reducer;

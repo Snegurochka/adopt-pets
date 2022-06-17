@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
+import setUser from "../../store/AC/user";
+import { signOutUser } from "../../utils/firebase.utils";
 
 import styles from "./UserBlock.module.css";
 
 // components
 import FavoriteTop from "../FavoriteTop/FavoriteTop";
-import { signOutUser } from "../../utils/firebase.utils";
-import setUser from "../../store/AC/user";
 
 
 const UserBlock: React.FC = () => {
@@ -20,17 +20,17 @@ const UserBlock: React.FC = () => {
 
     const signOutHandler = async () => {
         await signOutUser();
-       
+
         dispatch(setUser(null));
     }
-    
+
 
     return (
         <div className={styles.wrapper}>
             {user
                 ? (<>
                     <FavoriteTop />
-                    <span>Hi, Demo</span>
+                    <Link to='/account'>My account</Link>
                     <div onClick={signOutHandler}>Log out</div>
                 </>)
                 : <Link className="btn" to={'/auth'}>Login</Link>
