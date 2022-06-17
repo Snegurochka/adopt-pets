@@ -1,11 +1,13 @@
 import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectComments } from "../../store/selectors/comments";
+import { selectComments, selectCommentsIsLoading } from "../../store/selectors/comments";
 
 import styles from "./Comments.module.css";
 
 // components
 import NewCommentForm from "../NewCommentForm/NewCommentForm";
+import Spinner from "../Spinner/Spinner";
+import CommentItem from "../CommentItem/CommentItem";
 
 interface IProps {
     uid: string
@@ -16,12 +18,14 @@ const Comments: React.FC<IProps> = ({ uid }) => {
     const match = useRouteMatch();
 
     const comments = useSelector(selectComments);
+    const isLoading = useSelector(selectCommentsIsLoading);
 
     return (
         <div className={styles.wrapper}>
             <h2>Comments</h2>
+            {isLoading ? <Spinner /> : ''}
             {comments ? (
-                comments.map((comment) => (comment.title))
+                comments.map((comment) => <CommentItem comment={comment} />)
             ) :
                 (<p>there is no comments yet</p>)
             }

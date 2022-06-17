@@ -8,6 +8,8 @@ const initState = {
     error: null
 }
 
+export type CommentsInitStateType = typeof initState;
+
 const CommentReducer = (state = initState, action: ICommentsAction) => {
     switch (action.type) {
         case COMMENTS_ACTION_TYPES.SET_COMMENTS:
