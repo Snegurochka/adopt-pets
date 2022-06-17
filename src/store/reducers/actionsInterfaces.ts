@@ -2,13 +2,13 @@ import { User } from "firebase/auth";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from ".";
-import { AnimalTypesResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
-import { IFavoriteAnimal } from "../../interfaces/interfaces";
+import { oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
+import { changeAnimal, setAnimalTypes } from "../AC/animal";
 import { fetchCommentsFailed, setComments, isLoadingComments } from "../AC/comments";
+import { addFavoriteAnimal, deleteFavoriteAnimal, setFavoriteAnimals } from "../AC/favorites";
 import {
-    CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED,
-    SET_ANIMALS, SET_TOKEN, SET_ANIMAL, SET_AUTH,
-    ADD_FAV_ANIMAL, ADD_FAV_ANIMALS, DEL_FAV_ANIMAL, 
+    CHANGE_LOCATION, CHANGE_THEME, CHANGE_BREED,
+    SET_ANIMALS, SET_TOKEN, SET_AUTH,
     SET_USER
 } from "./actionsTypes";
 
@@ -46,38 +46,19 @@ export interface IBreedAction {
     payload: string
 }
 
-interface IAnimalSetAction {
-    type: typeof SET_ANIMAL
-    payload: AnimalTypesResponse[]
-}
+export type IAnimalAction =
+    | ReturnType<typeof changeAnimal>
+    | ReturnType<typeof setAnimalTypes>;
 
-interface IAnimalChangeAction {
-    type: typeof CHANGE_ANIMAL
-    payload: string
-}
-
-interface IFavoritesAddAction {
-    type: typeof ADD_FAV_ANIMAL
-    payload: IFavoriteAnimal
-}
-
-interface IFavoritesDelAction {
-    type: typeof DEL_FAV_ANIMAL
-    payload: number
-}
-
-interface IFavoritesSetAction {
-    type: typeof ADD_FAV_ANIMALS
-    payload: IFavoriteAnimal[]
-}
-
-export type IAnimalAction = IAnimalSetAction | IAnimalChangeAction;
-export type IFavoritesAction = IFavoritesAddAction | IFavoritesSetAction | IFavoritesDelAction;
+export type IFavoritesAction =
+    | ReturnType<typeof addFavoriteAnimal>
+    | ReturnType<typeof deleteFavoriteAnimal>
+    | ReturnType<typeof setFavoriteAnimals>;
 
 export type ICommentsAction =
-| ReturnType<typeof setComments>
-| ReturnType<typeof isLoadingComments>
-| ReturnType<typeof fetchCommentsFailed>
+    | ReturnType<typeof setComments>
+    | ReturnType<typeof isLoadingComments>
+    | ReturnType<typeof fetchCommentsFailed>
 
 
 export type ThunkActionResult<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>;
