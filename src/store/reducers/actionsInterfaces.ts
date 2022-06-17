@@ -1,11 +1,15 @@
 import { User } from "firebase/auth";
-import { AnimalTypesResponse, CommentsAPIResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
-import { IComment, IFavoriteAnimal } from "../../interfaces/interfaces";
+import { Action } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from ".";
+import { AnimalTypesResponse, oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
+import { IFavoriteAnimal } from "../../interfaces/interfaces";
+import { fetchCommentsFailed, setComments, isLoadingComments } from "../AC/comments";
 import {
     CHANGE_LOCATION, CHANGE_THEME, CHANGE_ANIMAL, CHANGE_BREED,
     SET_ANIMALS, SET_TOKEN, SET_ANIMAL, SET_AUTH,
     ADD_FAV_ANIMAL, ADD_FAV_ANIMALS, DEL_FAV_ANIMAL, 
-    SET_USER, ADD_COMMENT, SET_COMMENTS
+    SET_USER
 } from "./actionsTypes";
 
 export interface IAccessTokenAction {
@@ -70,14 +74,12 @@ interface IFavoritesSetAction {
 export type IAnimalAction = IAnimalSetAction | IAnimalChangeAction;
 export type IFavoritesAction = IFavoritesAddAction | IFavoritesSetAction | IFavoritesDelAction;
 
-interface ICommentAddAction {
-    type: typeof ADD_COMMENT
-    payload: IComment
-}
+export type ICommentsAction =
+| ReturnType<typeof setComments>
+| ReturnType<typeof isLoadingComments>
+| ReturnType<typeof fetchCommentsFailed>
 
-interface ICommentsSetAction {
-    type: typeof SET_COMMENTS
-    payload: IComment[]
-}
 
-export type ICommentsAction = ICommentAddAction | ICommentsSetAction;
+export type ThunkActionResult<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>;
+
+export type ThunkActionCommentsResult = ThunkActionResult<ICommentsAction>

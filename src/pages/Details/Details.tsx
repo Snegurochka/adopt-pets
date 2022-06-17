@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import API from "../../API";
-import { getCommentsByPetFromAPI } from "../../utils/firebase.utils";
-import setComments from "../../store/AC/comments";
+import { fetchComments } from "../../store/AC/comments";
 import { AppStateType } from "../../store/reducers";
 import { selectFavoritesIds } from "../../store/selectors/favorites";
 
@@ -43,11 +42,7 @@ const Details: React.FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchComments = async () => {
-            const comments = await getCommentsByPetFromAPI(petId) as IComment[];
-            dispatch(setComments(comments));
-        }
-        fetchComments();
+        dispatch(fetchComments(petId));
     }, [petId, dispatch]);
 
     const adopt = () => {
