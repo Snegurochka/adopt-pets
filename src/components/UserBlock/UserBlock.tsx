@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
-import setUser from "../../store/AC/user";
+import { setUser } from "../../store/AC/user";
 import { signOutUser } from "../../utils/firebase.utils";
 
 import styles from "./UserBlock.module.css";

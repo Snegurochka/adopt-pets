@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import setUser from '../../store/AC/user';
+import { setUser } from '../../store/AC/user';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase.utils';
 import Button from '../UI/Button/Button';
 import FormInput from '../UI/FormInput/FormInput';
@@ -34,7 +34,9 @@ const SignUpForm: React.FC = () => {
         event.preventDefault();
 
         try {
-            const { user } = await createAuthUserWithEmailAndPassword(email, password);
+            const userCredential = await createAuthUserWithEmailAndPassword(email, password);
+            if (!userCredential) return;
+            const { user } = userCredential;
 
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();

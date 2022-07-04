@@ -6,10 +6,10 @@ import { oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinter
 import { changeAnimal, setAnimalTypes } from "../AC/animal";
 import { fetchCommentsFailed, setComments, isLoadingComments } from "../AC/comments";
 import { addFavoriteAnimal, deleteFavoriteAnimal, setFavoriteAnimals } from "../AC/favorites";
+import { setUser } from "../AC/user";
 import {
     CHANGE_LOCATION, CHANGE_THEME, CHANGE_BREED,
     SET_ANIMALS, SET_TOKEN, SET_AUTH,
-    SET_USER
 } from "./actionsTypes";
 
 export interface IAccessTokenAction {
@@ -19,11 +19,6 @@ export interface IAccessTokenAction {
 
 export interface AuthAction {
     type: typeof SET_AUTH
-}
-
-export interface IUserAction {
-    type: typeof SET_USER
-    payload: User | null
 }
 
 export interface IAnimalsAction {
@@ -60,7 +55,11 @@ export type ICommentsAction =
     | ReturnType<typeof isLoadingComments>
     | ReturnType<typeof fetchCommentsFailed>
 
+export type IUserAction =
+    | ReturnType<typeof setUser>
+
 
 export type ThunkActionResult<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>;
 
 export type ThunkActionCommentsResult = ThunkActionResult<ICommentsAction>
+export type ThunkActionUserResult = ThunkActionResult<IUserAction>

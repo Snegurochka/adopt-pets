@@ -23,7 +23,7 @@ export const fetchComments = (petId: string): ThunkActionCommentsResult => async
     dispatch(isLoadingComments(true));
 
     try {
-        const comments = await getCommentsByPetFromAPI(petId) as IComment[];
+        const comments = await getCommentsByPetFromAPI(petId);
         dispatch(setComments(comments));
     } catch (err) {
         dispatch(fetchCommentsFailed(false));

@@ -11,8 +11,9 @@ import {
     onAuthStateChanged,
     NextOrObserver,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc, collection, query, getDocs } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, query, getDocs, QueryDocumentSnapshot } from 'firebase/firestore';
 import { firebaseAuthResponse } from '../interfaces/APIinterfases';
+import { IComment, IUser } from '../interfaces/interfaces';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBYNcIfrAZJyxDtTX_Nwj9AdTlH3IKziI4",
@@ -45,7 +46,7 @@ export const signOutUser = async () => await signOut(auth);
 export const createUserDocumentFromAuth = async (
     userAuth: User,
     additionalInformation = {}
-) => {
+): Promise<void | QueryDocumentSnapshot<IUser>> => {
     if (!userAuth) return;
 
     const userDocRef = doc(db, 'users', userAuth.uid);
@@ -68,24 +69,24 @@ export const createUserDocumentFromAuth = async (
         }
     }
 
-    return userDocRef;
+    return userSnapshot as QueryDocumentSnapshot<IUser>;
 };
 
-export const createAuthUserWithEmailAndPassword = async (email: string, password: string): Promise<firebaseAuthResponse> => {
-    //if (!email || !password) return;
+export const createAuthUserWithEmailAndPassword = async (email: string, password: string) => {
+    if (!email || !password) return;
 
     return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const signInUserWithEmailAndPassword = async (email: string, password: string): Promise<firebaseAuthResponse> => {
-    //if (!email || !password) return;
+export const signInUserWithEmailAndPassword = async (email: string, password: string) => {
+    if (!email || !password) return;
 
     return await signInWithEmailAndPassword(auth, email, password);
 };
 
 export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);
 
-export const getCollectionAndDocuments = async (collectionName: string, params='') => {
+export const getCollectionAndDocuments = async (collectionName: string, params = '') => {
     const collectionRef = collection(db, collectionName);
     const q = query(collectionRef);
 
@@ -94,7 +95,7 @@ export const getCollectionAndDocuments = async (collectionName: string, params='
 };
 
 // Comments
-export const getCommentsByPetFromAPI = async (petId: string) => {
+export const getCommentsByPetFromAPI = async (petId: string): Promise<IComment[]> => {
     const querySnapshot = await getCollectionAndDocuments('comments');
-    return querySnapshot.docs.map((doc) => doc.data());
+    return querySnapshot.docs.map((doc) => doc.data() as IComment);
 };

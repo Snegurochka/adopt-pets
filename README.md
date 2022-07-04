@@ -10,12 +10,13 @@ You can see in live: https://adopt-this-pet.netlify.app/
 !["Adopt this pet"](http://web-esse.ru/wp-includes/assets/adopt-this-pet-home.png "Adopt this pet")
 
 # Technologies used: 
-- React, React Hooks, Custom Hooks, Redux
+- React, React Hooks, Custom Hooks, Redux, Redux Thunk
 - TypeScript, JS,
 - REST API - Petfinder.com
-- Auth: Firebase
+- Firebase (Auth) and Firestore
 - CSS Modules for layout,
 - Jest (Unit tests, Snapshot tests)
 
 Libs: 
 - react-slick - I used it for the slider on the home page
+- reselect - for creating memorized selectors

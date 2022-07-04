@@ -10,7 +10,7 @@ import AuthPage from './pages/AuthPage/AuthPage';
 import Details from './pages/Details/Details';
 import Account from "./pages/Account/Account";
 import { createUserDocumentFromAuth, onAuthStateChangedListener } from "./utils/firebase.utils";
-import setUser from "./store/AC/user";
+import { setUser } from "./store/AC/user";
 import NotFound from "./pages/NotFound/NotFound";
 import FavoritesPage from "./pages/FavoritesPage/FavoritesPage";
 
