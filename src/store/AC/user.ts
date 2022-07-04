@@ -2,13 +2,39 @@ import { SET_USER } from './../reducers/actionsTypes';
 import { User } from 'firebase/auth';
 import { IUserAction, ThunkActionUserResult } from '../reducers/actionsInterfaces';
 import { Dispatch } from 'react';
-import { createUserDocumentFromAuth, signInUserWithEmailAndPassword, signInWithGooglePopup, signOutUser } from '../../utils/firebase.utils';
+import {
+    createAuthUserWithEmailAndPassword,
+    createUserDocumentFromAuth,
+    signInUserWithEmailAndPassword,
+    signInWithGooglePopup,
+    signOutUser
+} from '../../utils/firebase.utils';
 import { History } from 'history';
 
 export const setUser = (user: User | null) => ({
     type: SET_USER,
     payload: user
 } as const);
+
+export const signUnWithEmail = (
+    email: string,
+    password: string,
+    history: History,
+    displayName: string
+): ThunkActionUserResult =>
+    async (dispatch: Dispatch<IUserAction>) => {
+        try {
+            const userCredential = await createAuthUserWithEmailAndPassword(email, password);
+            if (!userCredential) return;
+            const { user } = userCredential;
+
+            await createUserDocumentFromAuth(user, { displayName });
+            dispatch(setUser(user));
+            history.replace(`/`);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 export const signInWithEmail = (email: string, password: string, history: History): ThunkActionUserResult =>
     async (dispatch: Dispatch<IUserAction>) => {

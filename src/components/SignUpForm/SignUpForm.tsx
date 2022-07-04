@@ -1,8 +1,7 @@
-import React, { ChangeEvent, useState } from 'react'
+import { FC, ChangeEvent, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { setUser } from '../../store/AC/user';
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase.utils';
+import { signUnWithEmail } from '../../store/AC/user';
 import Button from '../UI/Button/Button';
 import FormInput from '../UI/FormInput/FormInput';
 
@@ -13,7 +12,7 @@ const signUpFields = {
     confirmPassword: '',
 }
 
-const SignUpForm: React.FC = () => {
+const SignUpForm: FC = () => {
     const [fields, setFields] = useState(signUpFields);
     const { displayName, email, password } = fields;
 
@@ -26,37 +25,22 @@ const SignUpForm: React.FC = () => {
         setFields({ ...fields, [name]: value });
     };
 
-    const resetFormFields = () => {
-        setFields(signUpFields);
-    }
-
-    const submitHandler = async (event: React.FormEvent) => {
+    const submitHandler = (event: React.FormEvent) => {
         event.preventDefault();
-
-        try {
-            const userCredential = await createAuthUserWithEmailAndPassword(email, password);
-            if (!userCredential) return;
-            const { user } = userCredential;
-
-            await createUserDocumentFromAuth(user, { displayName });
-            resetFormFields();
-            dispatch(setUser(user));
-            history.replace(`/account`);
-        } catch (error) {
-            console.log(error);
-        }
+      
+        dispatch(signUnWithEmail(email, password, history, displayName));
     }
 
     return (
         <section>
             <h2>Don't have an account?</h2>
             <span>Sign up with your email and password</span>
-            <form onSubmit={submitHandler}>
+            <form>
                 <FormInput label="Display name" name="displayName" value={displayName} onChange={changeHandler} />
                 <FormInput label="Email address" name="email" value={email} onChange={changeHandler} />
                 <FormInput label="Password" name="password" value={password} type='password' onChange={changeHandler} />
 
-                <Button>Sign Up</Button>
+                <Button callback={submitHandler}>Sign Up</Button>
             </form>
         </section>
     )
