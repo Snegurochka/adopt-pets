@@ -1,6 +1,8 @@
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
+import { selectAnimals } from "../../store/selectors/animals";
+import { selectFavoritesIds } from "../../store/selectors/favorites";
 
 // styles
 //import styles from "./Results.module.css";
@@ -9,18 +11,14 @@ import { AppStateType } from "../../store/reducers";
 import Pet from "../Pet/Pet";
 import Card from "../UI/Card/Card";
 
-interface IProps {
-}
-
-const Results: React.FC<IProps> = () => {
-    const { animals, favorites } = useSelector((s: AppStateType) => s);
-
-    const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
+const Results: FC = () => {
+    const animals = useSelector(selectAnimals);
+    const idsFavorites = useSelector(selectFavoritesIds);
 
     return (
         <Card>
-            {!animals.animals.length ? (<h2>No Pets</h2>) : (
-                animals.animals.map((pet, ind) => (
+            {!animals.length ? (<h2>No Pets</h2>) : (
+                animals.map((pet, ind) => (
                     <Pet
                         key={`${ind}-${pet.id}`}
                         id={pet.id}
