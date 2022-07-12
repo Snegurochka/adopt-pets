@@ -62,5 +62,6 @@ export type IUserAction =
 
 export type ThunkActionResult<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>;
 
+export type ThunkActionAnimalsResult = ThunkActionResult<IAnimalsAction>
 export type ThunkActionCommentsResult = ThunkActionResult<ICommentsAction>
 export type ThunkActionUserResult = ThunkActionResult<IUserAction>

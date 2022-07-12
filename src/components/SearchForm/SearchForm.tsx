@@ -6,21 +6,26 @@ import API from "../../API";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
-import setAnimals from '../../store/AC/animals';
+import { fetchAnimals } from '../../store/AC/animals';
 import { changeAnimal, setAnimalTypes } from '../../store/AC/animal';
 import changeLocation from '../../store/AC/location';
 import changeBreed from '../../store/AC/breed';
+import { selectAccessToken } from "../../store/selectors/accessToken";
 
 //styles
 import styles from "./SearchForm.module.css";
 // components
 
 import Button from "../UI/Button/Button";
+import { selectFormAnimal } from "../../store/selectors/animal";
 
 
 const SearchForm = memo(() => {
-    const { animal, breed, location, accessToken } = useSelector((s: AppStateType) => s);
+    const { breed, location } = useSelector((s: AppStateType) => s);
+    const animal = useSelector(selectFormAnimal);
+    const accessToken = useSelector(selectAccessToken);
     const [breeds] = useBreedList(animal.currentAnimal);
+
     const history = useHistory();
     const locationParams = useLocation();
     const dispatch = useDispatch();
@@ -29,49 +34,38 @@ const SearchForm = memo(() => {
     const animalQuery = queryParams.get('animal');
 
     useEffect(() => {
-        if (accessToken.access_token.length) {
+        if (accessToken.length) {
             requestAnimalTypes();
         }
         async function requestAnimalTypes() {
-            const res = await API.fetchAnimalTypes(accessToken.access_token);
+            const res = await API.fetchAnimalTypes(accessToken);
 
             dispatch(setAnimalTypes(res.types));
         }
-    }, [accessToken.access_token]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [accessToken, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (animalQuery && (animal.currentAnimal !== animalQuery)) {
         dispatch(changeAnimal(animalQuery as string));
     }
 
     useEffect(() => {
-        if (accessToken.access_token.length) {
-            requestPets();
+        if (accessToken.length) {
+            dispatch(fetchAnimals(accessToken, animal.currentAnimal, breed));
         }
-    }, [accessToken.access_token, animal]); // eslint-disable-line react-hooks/exhaustive-deps
-    async function requestPets() {
-        let query = '';
-        if (animal.currentAnimal.length) {
-            query = `?type=${animal.currentAnimal.charAt(0).toLowerCase() + animal.currentAnimal.slice(1)}`;
-            if (breed) {
-                query += `&breed=${breed}`;
-            }
-        }
-        const animals = await API.fetchAnimals(query, 1, accessToken.access_token);
-        dispatch(setAnimals(animals));
-    }
+    }, [accessToken, animal.currentAnimal, breed, dispatch]);
+
 
     const animalChangeHandler = (value: string) => {
         if (animalQuery !== value) {
             history.push(`/?animal=${value}`);
         }
-
         dispatch(changeBreed(''));
         dispatch(changeAnimal(value as string));
     }
 
     const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        requestPets();
+        //requestPets();
     }
     return (
         <form className={styles.wrapper_form} onSubmit={submitHandler}>
