@@ -11,8 +11,18 @@ import {
     onAuthStateChanged,
     NextOrObserver,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc, collection, query, getDocs, QueryDocumentSnapshot } from 'firebase/firestore';
-import { firebaseAuthResponse } from '../interfaces/APIinterfases';
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+    collection,
+    query,
+    getDocs,
+    QueryDocumentSnapshot,
+    where
+} from 'firebase/firestore';
+
 import { IComment, IUser } from '../interfaces/interfaces';
 
 const firebaseConfig = {
@@ -86,7 +96,7 @@ export const signInUserWithEmailAndPassword = async (email: string, password: st
 
 export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);
 
-export const getCollectionAndDocuments = async (collectionName: string, params = '') => {
+export const getCollectionAndDocuments = async (collectionName: string) => {
     const collectionRef = collection(db, collectionName);
     const q = query(collectionRef);
 
@@ -96,6 +106,9 @@ export const getCollectionAndDocuments = async (collectionName: string, params =
 
 // Comments
 export const getCommentsByPetFromAPI = async (petId: string): Promise<IComment[]> => {
-    const querySnapshot = await getCollectionAndDocuments('comments');
+    const collectionRef = collection(db, 'comments');
+    const q = query(collectionRef, where('petId', '==', petId));
+
+    const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => doc.data() as IComment);
 };
