@@ -1,13 +1,14 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/selectors/user";
 import { IPhotoAnimal } from "../../interfaces/interfaces";
-//import { IPet } from "../../interfaces/interfaces";
 import styles from "./Pet.module.css";
 import noneImg from '../../img/none.png';
 
 // components
 import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
-import { useSelector } from "react-redux";
-import { AppStateType } from "../../store/reducers";
+
 
 //type Props = IPet & {location: string}
 interface IProps {
@@ -19,8 +20,8 @@ interface IProps {
   isFavorite: boolean;
 }
 
-const Pet: React.FC<IProps> = ({ id, name, animal, breed, images, isFavorite }) => {
-  const { user } = useSelector((s: AppStateType) => s.user);
+const Pet: React.FC<IProps> = memo(({ id, name, animal, breed, images, isFavorite }) => {
+  const user = useSelector(selectCurrentUser);
   return (
     <div className={styles.pet}>
       <div className={styles.image}>
@@ -42,6 +43,6 @@ const Pet: React.FC<IProps> = ({ id, name, animal, breed, images, isFavorite }) 
       </div>
     </div>
   );
-};
+});
 
 export default Pet;
