@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { createUserDocumentFromAuth, onAuthStateChangedListener } from "./utils/firebase.utils";
 import { setUser } from "./store/AC/user";
-import API from "./API";
 import setAccessToken from "./store/AC/accessToken";
+import API from "./API";
+import { AppRoute } from "./const";
 
 // Pages
 import Home from './pages/Home/Home';
@@ -40,11 +41,11 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact component={Home} />
-        <Route path='/auth' component={AuthPage} />
-        <Route path='/account' component={Account} />
-        <Route path="/details/:petId" component={Details} />
-        <Route path='/favorite' component={FavoritesPage} />
+        <Route path={AppRoute.HOME} exact component={Home} />
+        <Route path={AppRoute.AUTH} component={AuthPage} />
+        <Route path={AppRoute.ACCOUNT} component={Account} />
+        <Route path={AppRoute.DETAILS} component={Details} />
+        <Route path={AppRoute.FAVORITES} component={FavoritesPage} />
         <Route path='/*' component={NotFound} />
       </Switch>
     </BrowserRouter>
