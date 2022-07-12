@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { ChangeEvent, FC, FormEvent, memo, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useBreedList from "../../hooks/useBreedList";
 import API from "../../API";
@@ -18,9 +18,10 @@ import styles from "./SearchForm.module.css";
 
 import Button from "../UI/Button/Button";
 import { selectFormAnimal } from "../../store/selectors/animal";
+import FormSearchInput from "../UI/FormSearchInput/FormSearchInput";
 
 
-const SearchForm = memo(() => {
+const SearchForm:FC = memo(() => {
     const { breed, location } = useSelector((s: AppStateType) => s);
     const animal = useSelector(selectFormAnimal);
     const accessToken = useSelector(selectAccessToken);
@@ -63,21 +64,18 @@ const SearchForm = memo(() => {
         dispatch(changeAnimal(value as string));
     }
 
-    const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
+    const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         //requestPets();
     }
+
+    const locationChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeLocation(e.target.value));
+    }
+
     return (
         <form className={styles.wrapper_form} onSubmit={submitHandler}>
-            <label htmlFor="location">
-                Location
-                <input
-                    id="location"
-                    value={location}
-                    placeholder="Location"
-                    onChange={(e) => dispatch(changeLocation(e.target.value))}
-                />
-            </label>
+            <FormSearchInput id="location" label="Location" value={location} onChange={locationChangeHandler}/>
             <label htmlFor="animal">
                 Animal
                 <select
