@@ -1,12 +1,20 @@
 import { PetAPIResponse } from "../../interfaces/APIinterfases";
 
-import { IAnimalsAction } from "./../reducers/actionsInterfaces";
-import { SET_ANIMALS } from './../reducers/actionsTypes';
+import { ANIMALS_ACTION_TYPES } from '../actionsTypes';
 
-const setAnimals = (animals:PetAPIResponse):IAnimalsAction => {
-    return {
-        type: SET_ANIMALS,
-        payload: animals
-    }
-}
+export const setAnimals = (animals:PetAPIResponse) => ({
+    type: ANIMALS_ACTION_TYPES.SET_ANIMALS,
+    payload: animals
+} as const);
+
+export const isLoadingAnimals = (payload: boolean) => ({
+    type: ANIMALS_ACTION_TYPES.IS_LOADING,
+    payload: payload
+} as const);
+
+export const fetchAnimalsFailed = (payload: boolean) => ({
+    type: ANIMALS_ACTION_TYPES.FETCH_ANIMALS_FAILED,
+    payload: payload
+} as const);
+
 export default setAnimals;

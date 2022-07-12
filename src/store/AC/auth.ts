@@ -1,5 +1,5 @@
 import { AuthAction } from '../reducers/actionsInterfaces';
-import { SET_AUTH } from './../reducers/actionsTypes';
+import { SET_AUTH } from '../actionsTypes';
 
 const setAuth = (): AuthAction => {
     return {

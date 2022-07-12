@@ -1,7 +1,7 @@
 import { oauthTokenAPIResponse } from "../../interfaces/APIinterfases";
 
 import { IAccessTokenAction } from "./../reducers/actionsInterfaces";
-import { SET_TOKEN } from './../reducers/actionsTypes';
+import { SET_TOKEN } from '../actionsTypes';
 
 const setAccessToken = (accessToken:oauthTokenAPIResponse):IAccessTokenAction => {
     return {

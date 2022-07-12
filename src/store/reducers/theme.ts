@@ -1,5 +1,5 @@
 import { IThemeAction } from "./actionsInterfaces";
-import { CHANGE_THEME } from './actionsTypes';
+import { CHANGE_THEME } from '../actionsTypes';
 
 const ThemeReducer = (state = '', action: IThemeAction):string => {
     switch (action.type) {

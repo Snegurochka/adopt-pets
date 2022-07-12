@@ -1,4 +1,4 @@
-import { SET_USER } from './actionsTypes';
+import { SET_USER } from '../actionsTypes';
 import { IUserAction } from "./actionsInterfaces";
 import { User } from 'firebase/auth';
 

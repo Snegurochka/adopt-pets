@@ -1,6 +1,6 @@
 import { AnimalTypesResponse } from "../../interfaces/APIinterfases";
 import { IAnimalAction } from "./actionsInterfaces";
-import { SET_ANIMAL, CHANGE_ANIMAL } from './actionsTypes';
+import { SET_ANIMAL, CHANGE_ANIMAL } from '../actionsTypes';
 
 const initState = {
     "animalTypes": [{'name':'','_links': {'self': ''}}] as AnimalTypesResponse[],

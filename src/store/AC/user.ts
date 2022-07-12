@@ -1,7 +1,7 @@
-import { SET_USER } from './../reducers/actionsTypes';
+import { Dispatch } from 'react';
+import { SET_USER } from '../actionsTypes';
 import { User } from 'firebase/auth';
 import { IUserAction, ThunkActionUserResult } from '../reducers/actionsInterfaces';
-import { Dispatch } from 'react';
 import {
     createAuthUserWithEmailAndPassword,
     createUserDocumentFromAuth,

@@ -1,4 +1,4 @@
-import { SET_AUTH } from './actionsTypes';
+import { SET_AUTH } from '../actionsTypes';
 import { AuthAction } from "./actionsInterfaces";
 
 const initState = {

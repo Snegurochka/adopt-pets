@@ -1,16 +1,16 @@
-import { User } from "firebase/auth";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from ".";
-import { oauthTokenAPIResponse, PetAPIResponse } from "../../interfaces/APIinterfases";
+import { oauthTokenAPIResponse} from "../../interfaces/APIinterfases";
 import { changeAnimal, setAnimalTypes } from "../AC/animal";
-import { fetchCommentsFailed, setComments, isLoadingComments } from "../AC/comments";
+import setAnimals, { fetchAnimalsFailed, isLoadingAnimals } from "../AC/animals";
+import { fetchCommentsFailed, setComments, isLoadingComments, addComment } from "../AC/comments";
 import { addFavoriteAnimal, deleteFavoriteAnimal, setFavoriteAnimals } from "../AC/favorites";
 import { setUser } from "../AC/user";
 import {
     CHANGE_LOCATION, CHANGE_THEME, CHANGE_BREED,
-    SET_ANIMALS, SET_TOKEN, SET_AUTH,
-} from "./actionsTypes";
+    SET_TOKEN, SET_AUTH,
+} from "../actionsTypes";
 
 export interface IAccessTokenAction {
     type: typeof SET_TOKEN
@@ -19,11 +19,6 @@ export interface IAccessTokenAction {
 
 export interface AuthAction {
     type: typeof SET_AUTH
-}
-
-export interface IAnimalsAction {
-    type: typeof SET_ANIMALS
-    payload: PetAPIResponse
 }
 
 export interface ILocationAction {
@@ -41,6 +36,11 @@ export interface IBreedAction {
     payload: string
 }
 
+export type IAnimalsAction =
+    | ReturnType<typeof setAnimals>
+    | ReturnType<typeof isLoadingAnimals>
+    | ReturnType<typeof fetchAnimalsFailed>
+
 export type IAnimalAction =
     | ReturnType<typeof changeAnimal>
     | ReturnType<typeof setAnimalTypes>;
@@ -54,6 +54,7 @@ export type ICommentsAction =
     | ReturnType<typeof setComments>
     | ReturnType<typeof isLoadingComments>
     | ReturnType<typeof fetchCommentsFailed>
+    | ReturnType<typeof addComment>
 
 export type IUserAction =
     | ReturnType<typeof setUser>

@@ -12,7 +12,7 @@ import changeLocation from '../../store/AC/location';
 import changeBreed from '../../store/AC/breed';
 
 //styles
-import styles from "./SearchParams.module.css";
+import styles from "./SearchForm.module.css";
 // components
 
 import Button from "../UI/Button/Button";
@@ -74,7 +74,7 @@ const SearchForm = memo(() => {
         requestPets();
     }
     return (
-        <form onSubmit={submitHandler}>
+        <form className={styles.wrapper_form} onSubmit={submitHandler}>
             <label htmlFor="location">
                 Location
                 <input

@@ -1,5 +1,5 @@
 import { ILocationAction } from "./../reducers/actionsInterfaces";
-import { CHANGE_LOCATION } from './../reducers/actionsTypes';
+import { CHANGE_LOCATION } from '../actionsTypes';
 
 const changeLocationAC = (location:string):ILocationAction => {
     return {

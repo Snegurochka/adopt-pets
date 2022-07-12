@@ -1,5 +1,5 @@
 import { AnimalTypesResponse } from "../../interfaces/APIinterfases";
-import { CHANGE_ANIMAL, SET_ANIMAL } from './../reducers/actionsTypes';
+import { CHANGE_ANIMAL, SET_ANIMAL } from '../actionsTypes';
 
 export const changeAnimal = (animal: string) => ({
     type: CHANGE_ANIMAL,

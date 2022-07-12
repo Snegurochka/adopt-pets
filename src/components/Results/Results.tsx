@@ -1,11 +1,7 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { useSelector } from "react-redux";
-import { AppStateType } from "../../store/reducers";
 import { selectAnimals } from "../../store/selectors/animals";
 import { selectFavoritesIds } from "../../store/selectors/favorites";
-
-// styles
-//import styles from "./Results.module.css";
 
 // components
 import Pet from "../Pet/Pet";
