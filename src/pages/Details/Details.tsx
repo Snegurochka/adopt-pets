@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import API from "../../API";
 import { fetchComments } from "../../store/AC/comments";
-import { AppStateType } from "../../store/reducers";
 import { selectFavoritesIds } from "../../store/selectors/favorites";
+import { selectAccessToken } from "../../store/selectors/accessToken";
+import { selectCurrentUser } from "../../store/selectors/user";
 
+import API from "../../API";
 import styles from "./Details.module.css";
 
-import { IAnimal, IComment } from "../../interfaces/interfaces";
+import { IAnimal } from "../../interfaces/interfaces";
 
 // components
 import Carousel from "../../components/Carousel/Carousel";
@@ -22,22 +23,24 @@ import Layout from "../../components/Layout/Layout";
 
 
 const Details: React.FC = () => {
-    const { accessToken } = useSelector((s: AppStateType) => s);
-    const { user } = useSelector((s: AppStateType) => s.user);
+    const accessToken = useSelector(selectAccessToken);
+    const user = useSelector(selectCurrentUser);
     const idsFavorites = useSelector(selectFavoritesIds);
+
+    const { petId } = useParams<{ petId: string }>();
+
     const [loading, setLoading] = useState(true);
     const [petInfo, setPetInfo] = useState({} as IAnimal);
     const [showModal, setShowModal] = useState(false);
-    const { petId } = useParams<{ petId: string }>();
 
     useEffect(() => {
         const requestDetails = async () => {
-            const res = await API.fetchDetails(+petId, accessToken.access_token);
+            const res = await API.fetchDetails(+petId, accessToken);
             setLoading(false);
             setPetInfo(res.animal);
         }
         requestDetails();
-    }, [petId, accessToken.access_token]);// eslint-disable-line react-hooks/exhaustive-deps
+    }, [petId, accessToken]);// eslint-disable-line react-hooks/exhaustive-deps
 
     const dispatch = useDispatch();
 
@@ -84,9 +87,7 @@ const Details: React.FC = () => {
                                 </Modal>) : null
                         }
                     </div>
-                    {user
-                        ? (<Comments uid={user.uid} />)
-                        : null}
+                    <Comments />
                 </>
             )}
         </Layout>

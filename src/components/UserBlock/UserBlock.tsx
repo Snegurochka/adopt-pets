@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store/reducers";
-import setUser from "../../store/AC/user";
-import { signOutUser } from "../../utils/firebase.utils";
+import { SignOut } from "../../store/AC/user";
+
 
 import styles from "./UserBlock.module.css";
 
@@ -18,12 +18,9 @@ const UserBlock: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    const signOutHandler = async () => {
-        await signOutUser();
-
-        dispatch(setUser(null));
+    const signOutHandler = () => {
+        dispatch(SignOut());
     }
-
 
     return (
         <div className={styles.wrapper}>

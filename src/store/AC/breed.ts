@@ -1,5 +1,5 @@
 import { IBreedAction } from "./../reducers/actionsInterfaces";
-import { CHANGE_BREED } from './../reducers/actionsTypes';
+import { CHANGE_BREED } from '../actionsTypes';
 
 const changeBreedAC = (breed:string):IBreedAction => {
     return {

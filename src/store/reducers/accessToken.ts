@@ -1,6 +1,6 @@
 import { oauthTokenAPIResponse } from "../../interfaces/APIinterfases";
 import { IAccessTokenAction } from "./actionsInterfaces";
-import { SET_TOKEN } from './actionsTypes';
+import { SET_TOKEN } from '../actionsTypes';
 
 const initState = {
     token_type: "Bearer",

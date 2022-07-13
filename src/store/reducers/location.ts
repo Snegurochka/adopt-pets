@@ -1,5 +1,5 @@
 import { ILocationAction } from "./actionsInterfaces";
-import { CHANGE_LOCATION } from './actionsTypes';
+import { CHANGE_LOCATION } from '../actionsTypes';
 
 const locationReducer = (state = '', action: ILocationAction):string => {
     switch (action.type) {

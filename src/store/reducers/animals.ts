@@ -1,7 +1,7 @@
 import { PetAPIResponse } from "../../interfaces/APIinterfases";
 import { IAnimal } from "../../interfaces/interfaces";
 import { IAnimalsAction } from "./actionsInterfaces";
-import { SET_ANIMALS } from './actionsTypes';
+import { ANIMALS_ACTION_TYPES } from '../actionsTypes';
 
 const initState = {
     "animals": [] as IAnimal[],
@@ -13,9 +13,9 @@ const initState = {
     }
 }
 
-const AnimalsReducer = (state = initState as PetAPIResponse, action: IAnimalsAction): PetAPIResponse => {
+const AnimalsReducer = (state = initState, action: IAnimalsAction): PetAPIResponse => {
     switch (action.type) {
-        case SET_ANIMALS:
+        case ANIMALS_ACTION_TYPES.SET_ANIMALS:
             return { ...state, animals: action.payload.animals };
         default:
             return state;

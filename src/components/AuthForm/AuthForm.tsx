@@ -1,12 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-    createUserDocumentFromAuth,
-    signInUserWithEmailAndPassword,
-    signInWithGooglePopup
-} from '../../utils/firebase.utils';
-import setUser from '../../store/AC/user';
+
+import { signInWithEmail, signInWithGoogle } from '../../store/AC/user';
 
 import styles from './AuthForm.module.css';
 
@@ -33,23 +29,13 @@ const AuthForm: React.FC = () => {
         setFields({ ...fields, [name]: value });
     };
 
-    const submitHandler = async (evt: React.FormEvent) => {
+    const submitHandler = (evt: React.FormEvent) => {
         evt.preventDefault();
-        try {
-            const { user } = await signInUserWithEmailAndPassword(email, password);
-            dispatch(setUser(user));
-            history.replace(`/`);
-        } catch (error) {
-            console.log(error);
-        }
+        dispatch(signInWithEmail(email, password, history));
     }
 
-    const logGoogleUser = async () => {
-        const { user } = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(user);
-
-        dispatch(setUser(user));
-        history.replace(`/`);
+    const logGoogleUser = () => {
+        dispatch(signInWithGoogle(history));
     };
 
     return (
