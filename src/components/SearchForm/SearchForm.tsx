@@ -17,13 +17,15 @@ import styles from "./SearchForm.module.css";
 // components
 
 import Button from "../UI/Button/Button";
-import { selectFormAnimal } from "../../store/selectors/animal";
+import { selectFormAnimal, selectFormAnimalTypes } from "../../store/selectors/animal";
 import FormSearchInput from "../UI/FormSearchInput/FormSearchInput";
+import FormSelect from "../UI/FormSelect/FormSelect";
 
 
-const SearchForm:FC = memo(() => {
+const SearchForm: FC = memo(() => {
     const { breed, location } = useSelector((s: AppStateType) => s);
     const animal = useSelector(selectFormAnimal);
+    const animalOptions = useSelector(selectFormAnimalTypes);
     const accessToken = useSelector(selectAccessToken);
     const [breeds] = useBreedList(animal.currentAnimal);
 
@@ -56,12 +58,17 @@ const SearchForm:FC = memo(() => {
     }, [accessToken, animal.currentAnimal, breed, dispatch]);
 
 
-    const animalChangeHandler = (value: string) => {
+    const animalChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+        const { value } = e.target;
         if (animalQuery !== value) {
             history.push(`/?animal=${value}`);
         }
         dispatch(changeBreed(''));
-        dispatch(changeAnimal(value as string));
+        dispatch(changeAnimal(value));
+    }
+
+    const breedCangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+        dispatch(changeBreed(e.target.value));
     }
 
     const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
@@ -69,46 +76,32 @@ const SearchForm:FC = memo(() => {
         //requestPets();
     }
 
-    const locationChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    const locationChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(changeLocation(e.target.value));
     }
 
     return (
         <form className={styles.wrapper_form} onSubmit={submitHandler}>
-            <FormSearchInput id="location" label="Location" value={location} onChange={locationChangeHandler}/>
-            <label htmlFor="animal">
-                Animal
-                <select
-                    id="animal"
-                    value={animal.currentAnimal}
-                    onChange={(e) => animalChangeHandler(e.target.value as string)}
-                    onBlur={(e) => animalChangeHandler(e.target.value as string)}
-                >
-                    <option />
-                    {animal.animalTypes.map((animal) => (
-                        <option key={animal.name} value={animal.name}>
-                            {animal.name}
-                        </option>
-                    ))}
-                </select>
-            </label>
-            <label htmlFor="breed">
-                Breed
-                <select
-                    disabled={!breeds.length}
-                    id="breed"
-                    value={breed}
-                    onChange={(e) => dispatch(changeBreed(e.target.value))}
-                    onBlur={(e) => dispatch(changeBreed(e.target.value))}
-                >
-                    <option />
-                    {breeds.map((breed) => (
-                        <option key={breed} value={breed}>
-                            {breed}
-                        </option>
-                    ))}
-                </select>
-            </label>
+            <FormSearchInput
+                id="location"
+                label="Location"
+                value={location}
+                onChange={locationChangeHandler} />
+            <FormSelect
+                id="animal"
+                label="Animal"
+                value={animal.currentAnimal}
+                options={animalOptions}
+                onChange={animalChangeHandler}
+                onBlur={animalChangeHandler} />
+            <FormSelect
+                id="breed"
+                label="Breed"
+                value={breed}
+                options={breeds}
+                disabled={!breeds.length}
+                onChange={breedCangeHandler}
+                onBlur={breedCangeHandler} />
             <Button appearance='primary' >Submit</Button>
         </form>
     )
