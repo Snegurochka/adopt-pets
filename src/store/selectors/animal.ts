@@ -5,9 +5,9 @@ const selectAnimalReducer = (state: AppStateType) => state.animal;
 
 export const selectFormAnimal = createSelector(
     [selectAnimalReducer],
-    (animal) => animal
+    (animal) => animal.currentAnimal
 );
 
-export const selectFormAnimalTypes = createSelector([selectFormAnimal], (animal) =>
+export const selectFormAnimalTypes = createSelector([selectAnimalReducer], (animal) =>
     animal.animalTypes.map(item => item.name)
 );
