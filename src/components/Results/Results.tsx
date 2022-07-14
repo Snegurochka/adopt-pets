@@ -1,15 +1,22 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
-import { selectAnimals } from "../../store/selectors/animals";
+import { selectAnimals, selectAnimalsIsLoading } from "../../store/selectors/animals";
 import { selectFavoritesIds } from "../../store/selectors/favorites";
 
 // components
 import Pet from "../Pet/Pet";
+import Spinner from "../Spinner/Spinner";
 import Card from "../UI/Card/Card";
 
 const Results: FC = () => {
     const animals = useSelector(selectAnimals);
+    const isLoading = useSelector(selectAnimalsIsLoading);
     const idsFavorites = useSelector(selectFavoritesIds);
+
+    if (isLoading) return (
+        <Card>
+            <Spinner />
+        </Card>);
 
     return (
         <Card>
