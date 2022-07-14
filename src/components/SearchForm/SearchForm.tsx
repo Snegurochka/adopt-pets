@@ -53,16 +53,16 @@ const SearchForm: FC = memo(() => {
 
     useEffect(() => {
         if (accessToken.length) {
-            dispatch(fetchAnimals(accessToken, animal.currentAnimal, breed));
+            dispatch(fetchAnimals(accessToken, animal.currentAnimal, breed, location));
         }
-    }, [accessToken, animal.currentAnimal, breed, dispatch]);
+    }, [accessToken, animal.currentAnimal, breed, location, dispatch]);
 
+    const locationChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeLocation(e.target.value));
+    }
 
     const animalChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
         const { value } = e.target;
-        if (animalQuery !== value) {
-            history.push(`/?animal=${value}`);
-        }
         dispatch(changeBreed(''));
         dispatch(changeAnimal(value));
     }
@@ -73,18 +73,17 @@ const SearchForm: FC = memo(() => {
 
     const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        //requestPets();
-    }
-
-    const locationChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeLocation(e.target.value));
+        dispatch(fetchAnimals(accessToken, animal.currentAnimal, breed, location));
+        if (animalQuery !== animal.currentAnimal) {
+            history.push(`/?animal=${animal.currentAnimal}`);
+        }
     }
 
     return (
         <form className={styles.wrapper_form} onSubmit={submitHandler}>
             <FormSearchInput
                 id="location"
-                label="Location"
+                label="Location (Zip or State)"
                 value={location}
                 onChange={locationChangeHandler} />
             <FormSelect
