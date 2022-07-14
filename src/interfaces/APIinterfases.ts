@@ -50,3 +50,9 @@ export interface firebaseAuthResponse {
 export interface CommentsAPIResponse {
   comments: IComment[],
 }
+
+export interface IFavoriteAnimalRequest {
+  uid: string,
+  id: number,
+  name: string,
+}

@@ -20,10 +20,12 @@ import {
     query,
     getDocs,
     QueryDocumentSnapshot,
-    where
+    where,
+    addDoc
 } from 'firebase/firestore';
+import { IFavoriteAnimalRequest } from '../interfaces/APIinterfases';
 
-import { IComment, IUser } from '../interfaces/interfaces';
+import { IComment, IFavoriteAnimal, IUser } from '../interfaces/interfaces';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBYNcIfrAZJyxDtTX_Nwj9AdTlH3IKziI4",
@@ -111,4 +113,19 @@ export const getCommentsByPetFromAPI = async (petId: string): Promise<IComment[]
 
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => doc.data() as IComment);
+};
+
+// Favorites
+export const getFavoritesByUser = async (uid: string): Promise<IFavoriteAnimal[]> => {
+    const collectionRef = collection(db, 'favorites');
+    const q = query(collectionRef, where('uid', '==', uid));
+
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => doc.data() as IFavoriteAnimal);
+};
+
+export const addFavoriteAnimalDoc = async (animal: IFavoriteAnimalRequest) => {
+    const collectionRef = collection(db, 'favorites');
+
+    return await addDoc(collectionRef, animal);
 };
