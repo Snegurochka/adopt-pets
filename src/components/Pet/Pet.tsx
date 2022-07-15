@@ -2,18 +2,18 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/selectors/user";
+import { removeFavoriteAnimal, setFavoriteAnimal } from "../../store/AC/favorites";
 import { IPhotoAnimal } from "../../interfaces/interfaces";
 import styles from "./Pet.module.css";
 import noneImg from '../../img/none.png';
 
 // components
 import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
-import { removeFavoriteAnimal, setFavoriteAnimal } from "../../store/AC/favorites";
 
 
-//type Props = IPet & {location: string}
 interface IProps {
   name: string;
+  refId: string | null;
   animal: string;
   breed: string;
   images: IPhotoAnimal[];
@@ -21,14 +21,16 @@ interface IProps {
   isFavorite: boolean;
 }
 
-const Pet: React.FC<IProps> = memo(({ id, name, animal, breed, images, isFavorite }) => {
+const Pet: React.FC<IProps> = memo(({ id, refId, name, animal, breed, images, isFavorite }) => {
   const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
 
   const setFavoriteHandler = () => {
     if (!user) return;
+
     if (isFavorite) {
-      dispatch(removeFavoriteAnimal(id));
+      if (!refId) return;
+      dispatch(removeFavoriteAnimal(refId));
     } else {
       dispatch(setFavoriteAnimal({
         uid: user.uid,
@@ -49,7 +51,7 @@ const Pet: React.FC<IProps> = memo(({ id, name, animal, breed, images, isFavorit
       </div>
       <div className={styles.info}>
         {user
-          ? <FavoriteBtn isFavorite={isFavorite} btnClass="list" callback={setFavoriteHandler}/>
+          ? <FavoriteBtn isFavorite={isFavorite} btnClass="list" callback={setFavoriteHandler} />
           : null}
         <Link to={`/details/${id}`}>
           <h3>{name}</h3>

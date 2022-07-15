@@ -15,7 +15,7 @@ const FavoritesReducer = (state = initState as initStateType, action: IFavorites
         case FAVORITE_ACTION_TYPES.ADD_FAV_ANIMALS:
             return { ...state, animals: [...action.payload] };
         case FAVORITE_ACTION_TYPES.DEL_FAV_ANIMAL:
-            return { ...state, animals: state.animals.filter((item) => item.id !== action.payload) };
+            return { ...state, animals: state.animals.filter((item) => item.refId !== action.payload) };
         default:
             return state;
     }

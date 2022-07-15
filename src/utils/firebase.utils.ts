@@ -21,7 +21,8 @@ import {
     getDocs,
     QueryDocumentSnapshot,
     where,
-    addDoc
+    addDoc,
+    deleteDoc
 } from 'firebase/firestore';
 import { IFavoriteAnimalRequest } from '../interfaces/APIinterfases';
 
@@ -121,11 +122,19 @@ export const getFavoritesByUser = async (uid: string): Promise<IFavoriteAnimal[]
     const q = query(collectionRef, where('uid', '==', uid));
 
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map((doc) => doc.data() as IFavoriteAnimal);
+    return querySnapshot.docs.map((doc) => ({ refId: doc.id, ...doc.data() }) as IFavoriteAnimal);
 };
 
 export const addFavoriteAnimalDoc = async (animal: IFavoriteAnimalRequest) => {
     const collectionRef = collection(db, 'favorites');
 
-    return await addDoc(collectionRef, animal);
+    const docRef = await addDoc(collectionRef, animal);
+
+    return docRef.id;
+};
+
+export const deleteFavoriteAnimalDoc = async (refId: string) => {
+    const docRef = doc(db, 'favorites', refId);
+
+    return await deleteDoc(docRef);
 };

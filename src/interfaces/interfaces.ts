@@ -21,6 +21,7 @@ export interface IAnimal {
 }
 
 export interface IFavoriteAnimal {
+    refId: string,
     id: number,
     name: string,
 }

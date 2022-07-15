@@ -2,7 +2,7 @@ import { Dispatch } from "react";
 import { IFavoriteAnimal } from "../../interfaces/interfaces";
 import { IFavoritesAction } from "./../reducers/actionsInterfaces";
 import { FAVORITE_ACTION_TYPES } from '../actionsTypes';
-import { addFavoriteAnimalDoc, getFavoritesByUser } from "../../utils/firebase.utils";
+import { addFavoriteAnimalDoc, deleteFavoriteAnimalDoc, getFavoritesByUser } from "../../utils/firebase.utils";
 import { IFavoriteAnimalRequest } from "../../interfaces/APIinterfases";
 
 export const addFavoriteAnimal = (animal: IFavoriteAnimal) => ({
@@ -10,9 +10,9 @@ export const addFavoriteAnimal = (animal: IFavoriteAnimal) => ({
     payload: animal
 } as const);
 
-export const deleteFavoriteAnimal = (id: number) => ({
+export const deleteFavoriteAnimal = (refId: string) => ({
     type: FAVORITE_ACTION_TYPES.DEL_FAV_ANIMAL,
-    payload: id
+    payload: refId
 } as const);
 
 export const setFavoriteAnimals = (animals: IFavoriteAnimal[]) => ({
@@ -21,13 +21,13 @@ export const setFavoriteAnimals = (animals: IFavoriteAnimal[]) => ({
 } as const);
 
 export const setFavoriteAnimal = (animal: IFavoriteAnimalRequest) => async (dispatch: Dispatch<IFavoritesAction>) => {
-    await addFavoriteAnimalDoc(animal);
-    dispatch(addFavoriteAnimal(animal));
+    const refId = await addFavoriteAnimalDoc(animal);
+    dispatch(addFavoriteAnimal({...animal, refId}));
 }
 
-export const removeFavoriteAnimal = (id: number) => async (dispatch: Dispatch<IFavoritesAction>) => {
-    // await API.removeFavoriteAnimal(id);
-    dispatch(deleteFavoriteAnimal(id))
+export const removeFavoriteAnimal = (refId: string) => async (dispatch: Dispatch<IFavoritesAction>) => {
+    await deleteFavoriteAnimalDoc(refId);
+    dispatch(deleteFavoriteAnimal(refId))
 }
 
 export const fetchFavoriteAnimals = (id: string) => async (dispatch: Dispatch<IFavoritesAction>) => {
