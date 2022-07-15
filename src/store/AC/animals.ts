@@ -19,7 +19,7 @@ export const fetchAnimalsFailed = (payload: boolean) => ({
     payload: payload
 } as const);
 
-export const fetchAnimals = (access_token: string, currentAnimal:string, breed:string): ThunkActionAnimalsResult => async (dispatch: Dispatch<IAnimalsAction>) => {
+export const fetchAnimals = (access_token: string, currentAnimal: string, breed: string, location = ''): ThunkActionAnimalsResult => async (dispatch: Dispatch<IAnimalsAction>) => {
     dispatch(isLoadingAnimals(true));
     try {
         let query = '';
@@ -29,9 +29,15 @@ export const fetchAnimals = (access_token: string, currentAnimal:string, breed:s
                 query += `&breed=${breed}`;
             }
         }
+        if (location.length > 1) {
+            if (query) {
+                query += `&location=${location}`;
+            } else {
+                query += `?location=${location}`;
+            }
+        }
         const animals = await API.fetchAnimals(query, 1, access_token);
         dispatch(setAnimals(animals));
-
     } catch (err) {
         dispatch(fetchAnimalsFailed(false));
     }

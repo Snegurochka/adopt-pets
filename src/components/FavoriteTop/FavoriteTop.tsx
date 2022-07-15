@@ -1,23 +1,20 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFavoriteAnimals } from "../../store/AC/favorites";
+import { FC } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { selectFavoritesCount } from "../../store/selectors/favorites";
 
+import { AppRoute } from '../../const';
 import styles from "./FavoriteTop.module.css";
 import { ReactComponent as FavoriteIcon } from '../../assets/favorite-icon.svg';
 
-const FavoriteTop: React.FC = () => {
-    const FavoritesCount = useSelector(selectFavoritesCount);
-    const dispatch = useDispatch();
+const FavoriteTop: FC = () => {
+    const favoritesCount = useSelector(selectFavoritesCount);
 
-    useEffect(() => {
-        dispatch(fetchFavoriteAnimals(1));
-    }, [dispatch]);
     return (
-        <div className={styles.wrapper}>
+        <Link to={AppRoute.FAVORITES} className={styles.wrapper}>
             <FavoriteIcon />
-            <div className={styles.count}>{FavoritesCount}</div>
-        </div>
+            <div className={styles.count}>{favoritesCount}</div>
+        </Link>
     )
 }
 

@@ -1,15 +1,17 @@
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUserDocumentFromAuth, onAuthStateChangedListener } from "./utils/firebase.utils";
 import { setUser } from "./store/AC/user";
 import setAccessToken from "./store/AC/accessToken";
+import { selectCurrentUser } from "./store/selectors/user";
 import API from "./API";
 import { AppRoute } from "./const";
 
 // Pages
 import NotFound from "./pages/NotFound/NotFound";
 import Spinner from "./components/Spinner/Spinner";
+import { fetchFavoriteAnimals } from "./store/AC/favorites";
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Details = lazy(() => import('./pages/Details/Details'));
@@ -19,6 +21,7 @@ const FavoritesPage = lazy(() => import('./pages/FavoritesPage/FavoritesPage'));
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser);
 
   useEffect(() => {
     // Auth PetFinder API to get animals
@@ -39,6 +42,12 @@ const App: React.FC = () => {
 
     return unsubscribe;
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!user) return;
+    
+    dispatch(fetchFavoriteAnimals(user.uid));
+  }, [user]);
 
   return (
     <BrowserRouter>

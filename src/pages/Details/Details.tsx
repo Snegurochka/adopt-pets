@@ -53,6 +53,8 @@ const Details: React.FC = () => {
         setShowModal(!showModal)
     }
 
+    const setFavoriteHandler = () => {}
+
     const { id, type, breeds, description, name, photos } = petInfo;
     //const idsFavorites = useMemo(() => { return favorites.animals.map((item) => item.id) }, [favorites.animals]);
     return (
@@ -60,7 +62,7 @@ const Details: React.FC = () => {
             {loading ? <Spinner /> : (
                 <>
                     {user
-                        ? <FavoriteBtn id={id} name={name} isFavorite={idsFavorites.includes(id)} />
+                        ? <FavoriteBtn isFavorite={idsFavorites.includes(id)} callback={setFavoriteHandler}/>
                         : null}
                     {photos && <Carousel images={photos} />}
                     <div>

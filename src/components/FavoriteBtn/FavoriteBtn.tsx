@@ -1,38 +1,21 @@
-import { useDispatch } from "react-redux";
-
-import { removeFavoriteAnimal, setFavoriteAnimal } from '../../store/AC/favorites';
+import { FC } from "react";
 
 import styles from "./FavoriteBtn.module.css";
 import { ReactComponent as FavoriteIcon } from '../../assets/favorite-icon.svg';
 import { ReactComponent as FavoriteBorderIcon } from '../../assets/favorite-border-icon.svg';
 
 interface IProps {
-    id: number;
-    name: string;
     isFavorite: boolean;
+    callback: () => void;
     btnClass?: string;
 }
 
-const FavoriteBtn: React.FC<IProps> = (props) => {
-    const dispatch = useDispatch();
-
-    const classPosition = props.btnClass === 'list' ? styles.list : styles.detail;
-
-    const setFavoriteHandler = () => {
-        if (props.isFavorite) {
-            dispatch(removeFavoriteAnimal(props.id));
-        } else {
-            dispatch(setFavoriteAnimal({
-                id: props.id,
-                name: props.name
-            }));
-        }
-
-    }
+const FavoriteBtn: FC<IProps> = ({isFavorite, callback, btnClass}) => {
+    const classPosition = btnClass === 'list' ? styles.list : styles.detail;
 
     return (
-        <div className={styles.favorite_icon + ' ' + classPosition} onClick={setFavoriteHandler}>
-            {!props.isFavorite
+        <div className={styles.favorite_icon + ' ' + classPosition} onClick={callback}>
+            {!isFavorite
                 ? <FavoriteBorderIcon />
                 : <FavoriteIcon />
             }
