@@ -36,3 +36,7 @@ export const fetchComments = (petId: string): ThunkActionCommentsResult => async
     dispatch(isLoadingComments(false));
 };
 
+export const addCommentThunk = (comment: IComment): ThunkActionCommentsResult => async (dispatch: Dispatch<ICommentsAction>) => {
+    dispatch(addComment(comment));
+};
+

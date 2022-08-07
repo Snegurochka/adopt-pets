@@ -1,65 +1,43 @@
-import { memo } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, memo } from "react";
+
+import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/selectors/user";
-import { removeFavoriteAnimal, setFavoriteAnimal } from "../../store/AC/favorites";
-import { IPhotoAnimal } from "../../interfaces/interfaces";
+import useFavorite from "../../hooks/useFavorite";
+
+import { IFavoriteAnimal, IPhotoAnimal } from "../../interfaces/interfaces";
 import styles from "./Pet.module.css";
-import noneImg from '../../img/none.png';
 
 // components
 import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
-
+import PetInfo from "./PetInfo/PetInfo";
 
 interface IProps {
+  id: number;
   name: string;
-  refId: string | null;
   animal: string;
   breed: string;
   images: IPhotoAnimal[];
-  id: number;
-  isFavorite: boolean;
+  favorite: IFavoriteAnimal | undefined;
 }
 
-const Pet: React.FC<IProps> = memo(({ id, refId, name, animal, breed, images, isFavorite }) => {
-  const user = useSelector(selectCurrentUser);
-  const dispatch = useDispatch();
+const Pet: FC<IProps> = memo(
+  ({ id, name, animal, breed, images, favorite }) => {
+    const user = useSelector(selectCurrentUser);
 
-  const setFavoriteHandler = () => {
-    if (!user) return;
-
-    if (isFavorite) {
-      if (!refId) return;
-      dispatch(removeFavoriteAnimal(refId));
-    } else {
-      dispatch(setFavoriteAnimal({
-        uid: user.uid,
-        id: id,
-        name: name
-      }));
-    }
+    const [setFavoriteHandler, isFavorite] = useFavorite(id, name, favorite);
+    return (
+      <div className={styles.pet}>
+        {user ? (
+          <FavoriteBtn
+            isFavorite={isFavorite}
+            btnClass="list"
+            callback={setFavoriteHandler}
+          />
+        ) : null}
+        <PetInfo id={id} name={name} animal={animal} breed={breed} images={images} />
+      </div>
+    );
   }
-  return (
-    <div className={styles.pet}>
-      <div className={styles.image}>
-        <Link to={`/details/${id}`}>
-          <img data-testid="thumbnail" src={
-            images.length
-              ? images[0].small
-              : noneImg} alt={name} />
-        </Link>
-      </div>
-      <div className={styles.info}>
-        {user
-          ? <FavoriteBtn isFavorite={isFavorite} btnClass="list" callback={setFavoriteHandler} />
-          : null}
-        <Link to={`/details/${id}`}>
-          <h3>{name}</h3>
-        </Link>
-        <p>{`${animal} — ${breed}`}</p>
-      </div>
-    </div>
-  );
-});
+);
 
 export default Pet;

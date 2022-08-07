@@ -25,7 +25,7 @@ const CommentReducer = (state = initState, action: ICommentsAction) => {
         case COMMENTS_ACTION_TYPES.FETCH_COMMENTS_FAILED:
             return { ...state, error: true };
         case COMMENTS_ACTION_TYPES.ADD_COMMENT:
-            return { ...state, comments: {...state.comments, ...action.payload} };
+            return { ...state, comments: [...state.comments, action.payload] };
         default:
             return state;
     }

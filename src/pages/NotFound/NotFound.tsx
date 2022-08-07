@@ -1,10 +1,11 @@
-import Layout from "../../components/Layout/Layout";
+import { FC } from "react";
+import ContentWrapper from "../../components/Layout/ContentWrapper/ContentWrapper";
 
-const NotFound: React.FC = () => (
-    <Layout typeContent="page" header="Not found">
+const NotFound: FC = () => (
+    <ContentWrapper header="Not found">
         <div>
             Not found
         </div>
-    </Layout>)
+    </ContentWrapper>)
 
 export default NotFound;

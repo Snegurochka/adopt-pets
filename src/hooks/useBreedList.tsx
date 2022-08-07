@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import API from "../API";
 import { BreedListAPIResponse } from "../interfaces/APIinterfases";
 import { useSelector } from "react-redux";
-import { AppStateType } from "../store/reducers";
+import { selectAccessToken } from "../store/selectors/accessToken";
 
 const localCache: {
   [index: string]: string[];
@@ -14,7 +14,7 @@ type Status = 'unloaded' | 'loaded' | 'loading';
 export default function useBreedList(animal: string): [string[], Status] {
   const [breedList, setBreedList] = useState([] as string[]);
   const [status, setStatus] = useState("unloaded" as Status);
-  const { accessToken } = useSelector((s: AppStateType) => s);
+  const accessToken = useSelector(selectAccessToken);
 
   useEffect(() => {
     if (!animal) {
@@ -29,8 +29,8 @@ export default function useBreedList(animal: string): [string[], Status] {
       setBreedList([]);
       setStatus("loading");
 
-      if (accessToken.access_token) {
-        const res = await API.fetchBreedList(animal, accessToken.access_token) as BreedListAPIResponse;
+      if (accessToken) {
+        const res = await API.fetchBreedList(animal, accessToken) as BreedListAPIResponse;
         const breedList: string[] = [];
         res.breeds.forEach((breed) => {
           breedList.push(breed.name);
@@ -41,7 +41,7 @@ export default function useBreedList(animal: string): [string[], Status] {
       }
       setStatus("loaded");
     }
-  }, [animal, accessToken.access_token]);
+  }, [animal, accessToken]);
 
   return [breedList, status];
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { IComment } from '../../interfaces/interfaces';
+import { IComment } from '../../../interfaces/interfaces';
 
 import styles from "./CommentItem.module.css";
 
