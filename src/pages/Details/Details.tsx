@@ -20,6 +20,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import Button from "../../components/UI/Button/Button";
 import FavoriteBtn from "../../components/FavoriteBtn/FavoriteBtn";
 import ContentWrapper from "../../components/Layout/ContentWrapper/ContentWrapper";
+import PopUpAdoption from "../../components/PopUpAdoption/PopUpAdoption";
 
 const Details: FC = () => {
   const accessToken = useSelector(selectAccessToken);
@@ -46,11 +47,6 @@ const Details: FC = () => {
   useEffect(() => {
     dispatch(fetchComments(petId));
   }, [petId, dispatch]);
-
-  const adopt = () => {
-    console.log("ok adopted");
-    setShowModal(!showModal);
-  };
 
   const { id, type, breeds, description, name, photos } = petInfo;
   const favorite = favorites.find((item) => item.id === id);
@@ -88,13 +84,11 @@ const Details: FC = () => {
             <p>{description}</p>
             {showModal ? (
               <Modal>
-                <div>
-                  <h1>Would you like to adopt {name}?</h1>
-                  <div className="buttons">
-                    <Button onClick={adopt}>Yes</Button>
-                    <Button onClick={() => setShowModal(!showModal)}>No</Button>
-                  </div>
-                </div>
+                <PopUpAdoption
+                  name={name}
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                />
               </Modal>
             ) : null}
           </div>
