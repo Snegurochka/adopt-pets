@@ -8,9 +8,9 @@ import { AppRoute } from "../../const";
 import styles from "./Comments.module.css";
 
 // components
-import NewCommentForm from "../NewCommentForm/NewCommentForm";
+import NewCommentForm from "./NewCommentForm/NewCommentForm";
 import Spinner from "../Spinner/Spinner";
-import CommentItem from "../CommentItem/CommentItem";
+import CommentItem from "./CommentItem/CommentItem";
 
 
 const Comments: FC = memo(() => {
