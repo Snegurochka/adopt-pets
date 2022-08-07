@@ -1,16 +1,18 @@
-import React from 'react'
+import { FC } from 'react'
 import { useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import Layout from '../../components/Layout/Layout'
-import { AppStateType } from '../../store/reducers';
+import { selectCurrentUser } from '../../store/selectors/user';
 
-const Account: React.FC = () => {
-    const { user } = useSelector((s: AppStateType) => s.user);
+import Layout from '../../components/Layout/Layout'
+import { AppRoute } from '../../const';
+
+const Account: FC = () => {
+    const user = useSelector(selectCurrentUser);
     return (
         <Layout typeContent="page" header="My account">
             {user
                 ? (<div>
-                    <Link to="/favorite">Favorites</Link>
+                    <Link to={AppRoute.FAVORITES}>Favorites</Link>
                 </div>)
                 :
                 <Redirect to='/' />

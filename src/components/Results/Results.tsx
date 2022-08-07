@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import { selectAnimals, selectAnimalsIsLoading } from "../../store/selectors/animals";
-import { selectFavoritesAnimals, selectFavoritesIds } from "../../store/selectors/favorites";
+import { selectFavoritesAnimals } from "../../store/selectors/favorites";
 
 // components
 import Pet from "../Pet/Pet";
@@ -12,9 +12,6 @@ const Results: FC = () => {
     const animals = useSelector(selectAnimals);
     const isLoading = useSelector(selectAnimalsIsLoading);
     const favorites = useSelector(selectFavoritesAnimals);
-    const idsFavorites = useSelector(selectFavoritesIds);
-
-
 
     if (isLoading) return (
         <Card>

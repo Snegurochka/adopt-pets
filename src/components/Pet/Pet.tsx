@@ -9,6 +9,7 @@ import noneImg from '../../img/none.png';
 
 // components
 import FavoriteBtn from "../FavoriteBtn/FavoriteBtn";
+import { AppRoute } from "../../const";
 
 
 interface IProps {
@@ -42,7 +43,7 @@ const Pet: React.FC<IProps> = memo(({ id, refId, name, animal, breed, images, is
   return (
     <div className={styles.pet}>
       <div className={styles.image}>
-        <Link to={`/details/${id}`}>
+        <Link to={`${AppRoute.DETAILS_INDEX}${id}`}>
           <img data-testid="thumbnail" src={
             images.length
               ? images[0].small
@@ -53,7 +54,7 @@ const Pet: React.FC<IProps> = memo(({ id, refId, name, animal, breed, images, is
         {user
           ? <FavoriteBtn isFavorite={isFavorite} btnClass="list" callback={setFavoriteHandler} />
           : null}
-        <Link to={`/details/${id}`}>
+        <Link to={`${AppRoute.DETAILS_INDEX}${id}`}>
           <h3>{name}</h3>
         </Link>
         <p>{`${animal} — ${breed}`}</p>
