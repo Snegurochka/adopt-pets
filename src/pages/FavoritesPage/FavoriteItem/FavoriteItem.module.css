@@ -1,0 +1,4 @@
+.wrapper td {
+  border-bottom: 1px solid var(--darkGrey);
+  padding-bottom: 4px;
+}
