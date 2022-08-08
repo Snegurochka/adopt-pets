@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 import { IComment } from '../../../interfaces/interfaces';
 
 import styles from "./CommentItem.module.css";
@@ -7,7 +7,7 @@ interface IProps {
     comment: IComment
 }
 
-const CommentItem: React.FC<IProps> = ({ comment }) => {
+const CommentItem: FC<IProps> = ({ comment }) => {
     const { title, text } = comment;
     return (
         <div className={styles.wrapper}>

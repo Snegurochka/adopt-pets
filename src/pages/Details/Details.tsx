@@ -9,18 +9,15 @@ import { IAnimal } from "../../interfaces/interfaces";
 import useFavorite from "../../hooks/useFavorite";
 import API from "../../API";
 
-import styles from "./Details.module.css";
-
 // components
 import Carousel from "../../components/Carousel/Carousel";
 import Comments from "../../components/Comments/Comments";
 import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
-import Modal from "../../components/Modal/Modal";
+
 import Spinner from "../../components/Spinner/Spinner";
-import Button from "../../components/UI/Button/Button";
 import FavoriteBtn from "../../components/FavoriteBtn/FavoriteBtn";
 import ContentWrapper from "../../components/Layout/ContentWrapper/ContentWrapper";
-import PopUpAdoption from "../../components/PopUpAdoption/PopUpAdoption";
+import PetDetails from "../../components/PetDetails/PetDetails";
 
 const Details: FC = () => {
   const accessToken = useSelector(selectAccessToken);
@@ -31,7 +28,6 @@ const Details: FC = () => {
 
   const [loading, setLoading] = useState(true);
   const [petInfo, setPetInfo] = useState({} as IAnimal);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const requestDetails = async () => {
@@ -48,7 +44,7 @@ const Details: FC = () => {
     dispatch(fetchComments(petId));
   }, [petId, dispatch]);
 
-  const { id, type, breeds, description, name, photos } = petInfo;
+  const { id, name, photos } = petInfo;
   const favorite = favorites.find((item) => item.id === id);
   const [setFavoriteHandler, isFavorite] = useFavorite(id, name, favorite);
 
@@ -65,33 +61,7 @@ const Details: FC = () => {
             />
           ) : null}
           {photos && <Carousel images={photos} />}
-          <div>
-            <h1>{name}</h1>
-            <h2>{`${type} — ${breeds?.primary}`}</h2>
-            <div className={styles.addopt_wrapp}>
-              {user ? (
-                <Button
-                  onClick={() => {
-                    setShowModal(!showModal);
-                  }}
-                >
-                  Adopt {name}
-                </Button>
-              ) : (
-                <span>If you want to adopt this pet, please log in</span>
-              )}
-            </div>
-            <p>{description}</p>
-            {showModal ? (
-              <Modal>
-                <PopUpAdoption
-                  name={name}
-                  showModal={showModal}
-                  setShowModal={setShowModal}
-                />
-              </Modal>
-            ) : null}
-          </div>
+          <PetDetails user={user} petInfo={petInfo} />
           <Comments />
         </>
       )}

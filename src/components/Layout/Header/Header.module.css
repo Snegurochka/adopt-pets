@@ -1,28 +1,14 @@
 .wrapper {
-  display  : flex;
+  display: flex;
   max-width: var(--maxWidth);
-  margin   : 0 auto;
+  margin: 0 auto;
+  min-height: 156px;
   justify-content: space-between;
 }
 
-/* header>a,
-#root>div>h1 {
-  display: inline-block;
-  margin : 20px 0;
-}
-
-header a {
-  color          : var(--darkGrey);
-  font-size      : 3px;
-  text-decoration: none;
-  font-weight    : bold;
-  display        : block;
-  padding-bottom : 10px;
-} */
-
 @media only screen and (max-width: 1129px) {
   header {
-    align-content  : center;
+    align-content: center;
     justify-content: center;
   }
 }
