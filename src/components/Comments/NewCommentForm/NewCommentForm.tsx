@@ -1,15 +1,14 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { selectCurrentUser } from "../../../store/selectors/user";
+import { addCommentThunk } from "../../../store/AC/comments";
 
-import { AppRoute } from "../../../const";
 import classes from "./NewCommentForm.module.css";
 
 import Button from "../../UI/Button/Button";
 import FormInput from "../../UI/FormInput/FormInput";
 import FormTextArea from "../../UI/FormTextarea/FormTextArea";
-import { addCommentThunk } from "../../../store/AC/comments";
-import { selectCurrentUser } from "../../../store/selectors/user";
 
 interface IProps {
   petId: string;
@@ -32,12 +31,11 @@ const NewCommentForm: FC<IProps> = ({ petId }) => {
     if (!user) return;
     const comment = {
       uid: user.uid,
+      petId,
       title,
       text: commentText,
     };
-    dispatch(addCommentThunk(comment));
-
-    history.replace(`${AppRoute.DETAILS_INDEX}${petId}`);
+    dispatch(addCommentThunk(comment, history));
   };
 
   const changeHandler = (
