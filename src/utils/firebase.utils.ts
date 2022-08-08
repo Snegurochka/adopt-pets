@@ -116,6 +116,14 @@ export const getCommentsByPetFromAPI = async (petId: string): Promise<IComment[]
     return querySnapshot.docs.map((doc) => doc.data() as IComment);
 };
 
+export const addCommentDoc = async (comment: IComment) => {
+    const collectionRef = collection(db, 'comments');
+
+    const docRef = await addDoc(collectionRef, comment);
+
+    return docRef.id;
+};
+
 // Favorites
 export const getFavoritesByUser = async (uid: string): Promise<IFavoriteAnimal[]> => {
     const collectionRef = collection(db, 'favorites');

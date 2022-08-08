@@ -10,7 +10,7 @@ import UserBlock from "../../UserBlock/UserBlock";
 const Header: React.FC = () => (
   <header className={styles.wrapper}>
     <Link to="/">
-      <h1><img src={logo} alt="Adopt me!" /></h1>
+      <h1><img width={200} height={106} src={logo} alt="Adopt me!" /></h1>
     </Link>
     <UserBlock />
   </header>

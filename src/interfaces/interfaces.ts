@@ -34,6 +34,7 @@ export interface IUser {
 
 export interface IComment {
     uid: string,
+    petId: string,
     title: string,
     text: string
 }
