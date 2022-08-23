@@ -8,7 +8,7 @@ const initState = {
 
 type initStateType = typeof initState;
 
-const AuthReducer = (state = initState, action: IUserAction): initStateType => {
+const UserReducer = (state = initState, action: IUserAction): initStateType => {
     switch (action.type) {
         case SET_USER:
             if (!action.payload) {
@@ -20,4 +20,4 @@ const AuthReducer = (state = initState, action: IUserAction): initStateType => {
     }
 }
 
-export default AuthReducer;
+export default UserReducer;
